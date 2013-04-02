@@ -1,0 +1,9 @@
+target
+.project
+.classpath
+.settings
+*.iml
+/.idea/
+bin
+redeploy.sh
+.gradle
