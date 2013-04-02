@@ -9,8 +9,7 @@ public class EchoWebSocketHandler extends WebSocketHandlerAdapter {
 	public void handleTextMessage(WebSocketSession session, String message) {
 		try {
 			session.sendText(message);
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}

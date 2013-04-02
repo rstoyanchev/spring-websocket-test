@@ -28,13 +28,12 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.websocket.server.endpoint.SpringConfigurator;
 
-@ServerEndpoint(value="/echoAnnotatedEndpoint", configurator=SpringConfigurator.class)
+@ServerEndpoint(value = "/echoAnnotatedEndpoint", configurator = SpringConfigurator.class)
 public class EchoAnnotatedEndpoint {
 
 	private static Logger logger = LoggerFactory.getLogger(EchoAnnotatedEndpoint.class);
 
 	private final EchoService echoService;
-
 
 	@Autowired
 	public EchoAnnotatedEndpoint(EchoService echoService) {
@@ -46,14 +45,13 @@ public class EchoAnnotatedEndpoint {
 		logger.debug("Opened new session in instance " + this);
 	}
 
-    @OnMessage
-    public void echoTextMessage(Session session, String msg, boolean last) {
-    	try {
+	@OnMessage
+	public void echoTextMessage(Session session, String msg, boolean last) {
+		try {
 			session.getBasicRemote().sendText(this.echoService.getMessage(msg), last);
-		}
-    	catch (IOException e) {
+		} catch (IOException e) {
 			e.printStackTrace();
 		}
-    }
+	}
 
 }

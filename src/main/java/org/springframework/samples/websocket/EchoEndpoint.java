@@ -27,13 +27,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
-
 public class EchoEndpoint extends Endpoint {
 
 	private static Logger logger = LoggerFactory.getLogger(EchoEndpoint.class);
 
 	private final EchoService echoService;
-
 
 	@Autowired
 	public EchoEndpoint(EchoService echoService) {
@@ -51,8 +49,7 @@ public class EchoEndpoint extends Endpoint {
 				try {
 					logger.debug("Echoing message: " + message);
 					session.getBasicRemote().sendText(echoService.getMessage(message));
-				}
-				catch (IOException e) {
+				} catch (IOException e) {
 					e.printStackTrace();
 				}
 			}
