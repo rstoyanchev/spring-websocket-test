@@ -14,7 +14,7 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package org.springframework.samples.websocket;
+package org.springframework.samples.websocket.echo;
 
 import java.io.IOException;
 

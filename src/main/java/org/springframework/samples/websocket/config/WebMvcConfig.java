@@ -5,8 +5,7 @@ import java.util.Map;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.samples.websocket.ChatWebSocketHandler;
-import org.springframework.samples.websocket.EchoWebSocketHandler;
+import org.springframework.samples.websocket.echo.EchoWebSocketHandler;
 import org.springframework.web.HttpRequestHandler;
 import org.springframework.web.servlet.config.annotation.DefaultServletHandlerConfigurer;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
@@ -20,15 +19,11 @@ import org.springframework.websocket.support.EndpointHttpRequestHandler;
 @EnableWebMvc
 public class WebMvcConfig extends WebMvcConfigurerAdapter {
 
-	// -------------------------------------------------------------
-	// deployment via HandshakeRequestHandler in Spring MVC
-
 	@Bean
 	public SimpleUrlHandlerMapping handlerMapping() {
 
 		Map<String, Object> urlMap = new HashMap<String, Object>();
 		urlMap.put("/echo", createHttpRequestHandler(new EchoWebSocketHandler()));
-		urlMap.put("/chat", createHttpRequestHandler(new ChatWebSocketHandler()));
 
 		SimpleUrlHandlerMapping handlerMapping = new SimpleUrlHandlerMapping();
 		handlerMapping.setOrder(1);

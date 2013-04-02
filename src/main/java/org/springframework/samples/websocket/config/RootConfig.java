@@ -17,26 +17,31 @@ package org.springframework.samples.websocket.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.samples.websocket.DefaultEchoService;
-import org.springframework.samples.websocket.EchoAnnotatedEndpoint;
-import org.springframework.samples.websocket.EchoEndpoint;
-import org.springframework.samples.websocket.EchoService;
-import org.springframework.samples.websocket.EchoWebSocketHandler;
+import org.springframework.samples.websocket.chat.ChatAnnotatedEndpoint;
+import org.springframework.samples.websocket.echo.DefaultEchoService;
+import org.springframework.samples.websocket.echo.EchoAnnotatedEndpoint;
+import org.springframework.samples.websocket.echo.EchoEndpoint;
+import org.springframework.samples.websocket.echo.EchoService;
 import org.springframework.websocket.server.endpoint.EndpointRegistration;
 import org.springframework.websocket.server.endpoint.ServletEndpointExporter;
 
 @Configuration
 public class RootConfig {
 
-	// ----------------------------------------------------------
-	// JSR-356 deployment via ServerContainer.addEndpoint
+	// Detect and export beans of type javax.websocket.server.ServerEndpointConfig (type-based API)
+	// Detect and export beans annotated with @ServerEndpoint
 
 	@Bean
 	public ServletEndpointExporter endpointExporter() {
-		return new ServletEndpointExporter();
+
+		// The SCI endpoint scan is disabled in web.xml, so we must list @ServerEndpoint classes here
+
+		ServletEndpointExporter exporter = new ServletEndpointExporter();
+		exporter.setAnnotatedEndpointClasses(EchoAnnotatedEndpoint.class, ChatAnnotatedEndpoint.class);
+		return exporter;
 	}
 
-	// Spring initialized javax.websocket.Endpoint instance per connection (default spec scope semantics)
+	// Spring initialized javax.websocket.Endpoint with default spec scope (instance per connection) semantics
 	// Resulting instance not managed by Spring
 
 	@Bean
@@ -44,32 +49,16 @@ public class RootConfig {
 		return new EndpointRegistration("/echoEndpoint", EchoEndpoint.class);
 	}
 
-	// A single javax.websocket.Endpoint instance (possibly managed by Spring) to serve all incoming connections
+	// A javax.websocket.Endpoint singleton (possibly managed by Spring) serves all incoming connections
 
 	@Bean
 	public EndpointRegistration echoEndpointSingleton() {
 		return new EndpointRegistration("/echoEndpointSingleton", new EchoEndpoint(echoService()));
 	}
 
-	// A single @ServerEndpoint instance (possibly managed by Spring) to serve all incoming connections
-	// The configurator attribute must be set to SpringConfigurator
-
-	@Bean
-	public EchoAnnotatedEndpoint echoAnnotatedEndpointSingleton() {
-		return new EchoAnnotatedEndpoint(echoService());
-	}
-
 	@Bean
 	public EchoService echoService() {
 		return new DefaultEchoService("Did you say \"%s\"?");
-	}
-
-	// ----------------------------------------------------------
-	// programmatic JSR-356 deployment w/ WebSocketHandler
-
-	@Bean
-	public EndpointRegistration echoWebSocketHandler() {
-		return new EndpointRegistration("/echoWebSocketHandler", new EchoWebSocketHandler());
 	}
 
 }

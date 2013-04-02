@@ -13,19 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.springframework.samples.websocket;
+package org.springframework.samples.websocket.echo;
 
-public class DefaultEchoService implements EchoService {
+public interface EchoService {
 
-	private final String echoFormat;
-
-	public DefaultEchoService(String echoFormat) {
-		this.echoFormat = (echoFormat != null) ? echoFormat : "%s";
-	}
-
-	@Override
-	public String getMessage(String message) {
-		return String.format(this.echoFormat, message);
-	}
+	String getMessage(String message);
 
 }

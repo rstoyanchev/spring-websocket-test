@@ -78,9 +78,9 @@
 
         Chat.initialize = function() {
             if (window.location.protocol == 'http:') {
-                Chat.connect('ws://' + window.location.host + '/spring-websocket-test/chat');
+                Chat.connect('ws://' + window.location.host + '/spring-websocket-test/chatAnnotatedEndpoint');
             } else {
-                Chat.connect('wss://' + window.location.host + '/spring-websocket-test/chat');
+                Chat.connect('wss://' + window.location.host + '/spring-websocket-test/chatAnnotatedEndpoint');
             }
         };
 
