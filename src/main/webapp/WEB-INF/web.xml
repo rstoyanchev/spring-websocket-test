@@ -4,10 +4,12 @@
       version="3.0">
 
 	<!-- Only enable the SpringServletContainerInitializer scan,
-		 implicitly disabling the Servlet container's scan for WebSocket endpoints -->
+		 implicitly disabling the Servlet container's scan for WebSocket endpoints
 		 
 	<absolute-ordering>
 		<name>spring_web</name>
 	</absolute-ordering>
+
+	 -->
 
 </web-app>

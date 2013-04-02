@@ -5,5 +5,4 @@ target
 *.iml
 /.idea/
 bin
-redeploy.sh
 .gradle

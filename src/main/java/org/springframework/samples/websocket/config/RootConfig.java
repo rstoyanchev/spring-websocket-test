@@ -33,11 +33,9 @@ public class RootConfig {
 
 	@Bean
 	public ServletEndpointExporter endpointExporter() {
-
-		// The SCI endpoint scan is disabled in web.xml, so we must list @ServerEndpoint classes here
-
 		ServletEndpointExporter exporter = new ServletEndpointExporter();
-		exporter.setAnnotatedEndpointClasses(EchoAnnotatedEndpoint.class, ChatAnnotatedEndpoint.class);
+		// Uncomment this SCI endpoint scan is disabled (see <absolute-ordering> in web.xml)
+		// exporter.setAnnotatedEndpointClasses(EchoAnnotatedEndpoint.class, ChatAnnotatedEndpoint.class);
 		return exporter;
 	}
 

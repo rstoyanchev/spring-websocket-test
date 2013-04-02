@@ -19,22 +19,22 @@ import org.springframework.websocket.support.EndpointHttpRequestHandler;
 @EnableWebMvc
 public class WebMvcConfig extends WebMvcConfigurerAdapter {
 
-	@Bean
-	public SimpleUrlHandlerMapping handlerMapping() {
-
-		Map<String, Object> urlMap = new HashMap<String, Object>();
-		urlMap.put("/echo", createHttpRequestHandler(new EchoWebSocketHandler()));
-
-		SimpleUrlHandlerMapping handlerMapping = new SimpleUrlHandlerMapping();
-		handlerMapping.setOrder(1);
-		handlerMapping.setUrlMap(urlMap);
-
-		return handlerMapping;
-	}
-
-	public HttpRequestHandler createHttpRequestHandler(WebSocketHandler webSocketHandler) {
-		return new EndpointHttpRequestHandler(new EndpointHandshakeRequestHandler(webSocketHandler));
-	}
+//	@Bean
+//	public SimpleUrlHandlerMapping handlerMapping() {
+//
+//		Map<String, Object> urlMap = new HashMap<String, Object>();
+//		urlMap.put("/echo", createHttpRequestHandler(new EchoWebSocketHandler()));
+//
+//		SimpleUrlHandlerMapping handlerMapping = new SimpleUrlHandlerMapping();
+//		handlerMapping.setOrder(1);
+//		handlerMapping.setUrlMap(urlMap);
+//
+//		return handlerMapping;
+//	}
+//
+//	public HttpRequestHandler createHttpRequestHandler(WebSocketHandler webSocketHandler) {
+//		return new EndpointHttpRequestHandler(new EndpointHandshakeRequestHandler(webSocketHandler));
+//	}
 
 	// -------------------------------------------------------------
 
