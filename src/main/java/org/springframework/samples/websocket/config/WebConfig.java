@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.samples.websocket.echo.EchoWebSocketHandler;
 import org.springframework.samples.websocket.echo.sockjs.EchoSockJsHandler;
 import org.springframework.sockjs.server.support.DefaultSockJsService;
 import org.springframework.sockjs.server.support.SockJsServiceHandlerMapping;
@@ -17,6 +18,8 @@ import org.springframework.web.servlet.config.annotation.DefaultServletHandlerCo
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 import org.springframework.web.servlet.handler.SimpleUrlHandlerMapping;
+import org.springframework.websocket.server.endpoint.handshake.EndpointHandshakeHandler;
+import org.springframework.websocket.server.support.HandshakeHttpRequestHandler;
 
 @Configuration
 @EnableWebMvc
@@ -48,9 +51,11 @@ public class WebConfig extends WebMvcConfigurerAdapter {
 	@Bean
 	public SimpleUrlHandlerMapping handlerMapping() {
 
+		EndpointHandshakeHandler endpointHandler = new EndpointHandshakeHandler(new EchoWebSocketHandler());
+
 		Map<String, Object> urlMap = new HashMap<String, Object>();
 		urlMap.put("/restart", createEchoRestartHandler());
-//		urlMap.put("/echoHandler", createHttpRequestHandler(new EchoWebSocketHandler()));
+		urlMap.put("/echoHandler", new HandshakeHttpRequestHandler(endpointHandler));
 
 		SimpleUrlHandlerMapping handlerMapping = new SimpleUrlHandlerMapping();
 		handlerMapping.setOrder(1);
@@ -70,10 +75,6 @@ public class WebConfig extends WebMvcConfigurerAdapter {
 			}
 		};
 	}
-
-//	public HttpRequestHandler createHttpRequestHandler(WebSocketHandler webSocketHandler) {
-//		return new EndpointHttpRequestHandler(new EndpointHandshakeRequestHandler(webSocketHandler));
-//	}
 
 	// Allow serving HTML files through the default Servlet
 

@@ -68,8 +68,10 @@
                 return;
             }
 
-            // protocols_whitelist: ['iframe-htmlfile']
-            ws = new SockJS('/spring-websocket-test/echoSockJS', undefined, {protocols_whitelist: ['websocket']});
+            // protocols_whitelist: ['websocket', 'xdr-streaming', 'xhr-streaming', 'iframe-eventsource',
+            //     'iframe-htmlfile', 'xdr-polling', 'xhr-polling', 'iframe-xhr-polling', 'jsonp-polling']
+            
+            ws = new SockJS('/spring-websocket-test/echoSockJS', undefined, {protocols_whitelist: ['xhr-streaming']});
 
             ws.onopen = function () {
                 setConnected(true);
