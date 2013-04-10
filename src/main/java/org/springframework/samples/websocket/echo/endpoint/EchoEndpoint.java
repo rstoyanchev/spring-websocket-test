@@ -14,7 +14,7 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package org.springframework.samples.websocket.echo;
+package org.springframework.samples.websocket.echo.endpoint;
 
 import java.io.IOException;
 
@@ -26,6 +26,7 @@ import javax.websocket.Session;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.samples.websocket.echo.EchoService;
 
 public class EchoEndpoint extends Endpoint {
 

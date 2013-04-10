@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.springframework.websocket.support;
+package org.springframework.websocket.server.support;
 
 import java.io.IOException;
 
@@ -26,7 +26,8 @@ import org.springframework.http.server.ServerHttpResponse;
 import org.springframework.http.server.ServletServerHttpRequest;
 import org.springframework.http.server.ServletServerHttpResponse;
 import org.springframework.web.HttpRequestHandler;
-import org.springframework.websocket.server.endpoint.EndpointHandshakeRequestHandler;
+import org.springframework.web.util.NestedServletException;
+import org.springframework.websocket.server.endpoint.EndpointHandshakeHandler;
 
 
 /**
@@ -35,10 +36,10 @@ import org.springframework.websocket.server.endpoint.EndpointHandshakeRequestHan
  */
 public class EndpointHttpRequestHandler implements HttpRequestHandler {
 
-	private final EndpointHandshakeRequestHandler handshakeHandler;
+	private final EndpointHandshakeHandler handshakeHandler;
 
 
-	public EndpointHttpRequestHandler(EndpointHandshakeRequestHandler handshakeHandler) {
+	public EndpointHttpRequestHandler(EndpointHandshakeHandler handshakeHandler) {
 		this.handshakeHandler = handshakeHandler;
 	}
 
@@ -50,12 +51,10 @@ public class EndpointHttpRequestHandler implements HttpRequestHandler {
 		ServerHttpResponse response = new ServletServerHttpResponse(servletResponse);
 
 		try {
-			if (!this.handshakeHandler.doHandshake(request, response)) {
-
-			}
+			this.handshakeHandler.doHandshake(request, response);
 		}
 		catch (Exception e) {
-			e.printStackTrace();
+			throw new NestedServletException("Handshake failed", e);
 		}
 	}
 

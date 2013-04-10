@@ -14,10 +14,6 @@
 		<level value="debug" />
 	</logger>
 	
-	<logger name="org.springframework.sockjs">
-		<level value="trace" />
-	</logger>
-
 	<logger name="org.springframework.web">
 		<level value="debug" />
 	</logger>

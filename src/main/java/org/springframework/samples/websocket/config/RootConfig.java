@@ -15,39 +15,54 @@
  */
 package org.springframework.samples.websocket.config;
 
+import javax.websocket.HandshakeResponse;
+import javax.websocket.server.HandshakeRequest;
+import javax.websocket.server.ServerEndpointConfig;
+import javax.websocket.server.ServerEndpointConfig.Configurator;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.samples.websocket.chat.ChatAnnotatedEndpoint;
+import org.springframework.samples.websocket.client.GreetingService;
+import org.springframework.samples.websocket.client.SimpleClientEndpoint;
+import org.springframework.samples.websocket.client.SimpleGreetingService;
 import org.springframework.samples.websocket.echo.DefaultEchoService;
-import org.springframework.samples.websocket.echo.EchoAnnotatedEndpoint;
-import org.springframework.samples.websocket.echo.EchoEndpoint;
 import org.springframework.samples.websocket.echo.EchoService;
+import org.springframework.samples.websocket.echo.endpoint.EchoEndpoint;
+import org.springframework.websocket.client.EndpointConnectionManager;
 import org.springframework.websocket.server.endpoint.EndpointRegistration;
 import org.springframework.websocket.server.endpoint.ServletEndpointExporter;
 
 @Configuration
 public class RootConfig {
 
-	// Detect and export beans of type javax.websocket.server.ServerEndpointConfig (type-based API)
-	// Detect and export beans annotated with @ServerEndpoint
+	// -------------------------------------------------------------------------------------
+	// EndpointExporter:
+	//   Detect/export javax.websocket.server.ServerEndpointConfig beans(type-based API)
+	//   Detect/export @ServerEndpoint beans
 
 	@Bean
 	public ServletEndpointExporter endpointExporter() {
 		ServletEndpointExporter exporter = new ServletEndpointExporter();
-		// Uncomment this SCI endpoint scan is disabled (see <absolute-ordering> in web.xml)
+		// Uncomment when container scan is disabled (see <absolute-ordering> in web.xml)
 		// exporter.setAnnotatedEndpointClasses(EchoAnnotatedEndpoint.class, ChatAnnotatedEndpoint.class);
 		return exporter;
 	}
 
-	// Spring initialized javax.websocket.Endpoint with default spec scope (instance per connection) semantics
-	// Resulting instance not managed by Spring
+	// Spring initialized javax.websocket.Endpoint with instance per connection scope semantics
 
 	@Bean
 	public EndpointRegistration echoEndpoint() {
-		return new EndpointRegistration("/echoEndpoint", EchoEndpoint.class);
+		EndpointRegistration reg = new EndpointRegistration("/echoEndpoint", EchoEndpoint.class);
+		reg.setConfigurator(new Configurator() {
+			@Override
+			public void modifyHandshake(ServerEndpointConfig sec, HandshakeRequest request, HandshakeResponse response) {
+				throw new IllegalStateException("ha!");
+			}
+		});
+		return reg;
 	}
 
-	// A javax.websocket.Endpoint singleton (possibly managed by Spring) serves all incoming connections
+	// javax.websocket.Endpoint singleton serves all incoming connections
 
 	@Bean
 	public EndpointRegistration echoEndpointSingleton() {
@@ -57,6 +72,22 @@ public class RootConfig {
 	@Bean
 	public EchoService echoService() {
 		return new DefaultEchoService("Did you say \"%s\"?");
+	}
+
+	// --------------------------------------------------------------------------
+	// Client EndpointConnectionManager connecting to the server echo endpoint
+
+	@Bean
+	public EndpointConnectionManager echoEndpointConnection() {
+		String uri = "ws://localhost:8080/spring-websocket-test/echoEndpoint";
+		EndpointConnectionManager connectionManager = new EndpointConnectionManager(SimpleClientEndpoint.class, uri);
+//		connectionManager.setAutoStartup(true);
+		return connectionManager;
+	}
+
+	@Bean
+	public GreetingService greetingService() {
+		return new SimpleGreetingService();
 	}
 
 }

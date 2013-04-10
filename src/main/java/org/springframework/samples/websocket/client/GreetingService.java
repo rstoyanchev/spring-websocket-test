@@ -13,26 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+package org.springframework.samples.websocket.client;
 
-package org.springframework.samples.websocket.config;
+public interface GreetingService {
 
-import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
-
-public class DispatcherServletInitializer extends AbstractAnnotationConfigDispatcherServletInitializer {
-
-	@Override
-	protected Class<?>[] getRootConfigClasses() {
-		return new Class<?>[] { RootConfig.class };
-	}
-
-	@Override
-	protected Class<?>[] getServletConfigClasses() {
-		return new Class<?>[] { WebConfig.class };
-	}
-
-	@Override
-	protected String[] getServletMappings() {
-		return new String[] { "/" };
-	}
+	String getGreeting();
 
 }

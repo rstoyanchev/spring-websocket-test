@@ -1,6 +1,6 @@
 set -v
 
-mvn clean package
+mvn -DskipTests clean package
 
 TOMCAT=/home/rossen/dev/sources/apache/tomcat/trunk/output/build
 
