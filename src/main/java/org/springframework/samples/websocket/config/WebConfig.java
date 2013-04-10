@@ -26,6 +26,8 @@ public class WebConfig extends WebMvcConfigurerAdapter {
 	private RootConfig rootConfig;
 
 
+	// Spring MVC handler mapping for SockJS service
+
 	@Bean
 	public SockJsServiceHandlerMapping sockJsHandlerMapping() {
 		SockJsServiceHandlerMapping hm = new SockJsServiceHandlerMapping(echoSockJsService());
@@ -33,17 +35,21 @@ public class WebConfig extends WebMvcConfigurerAdapter {
 		return hm;
 	}
 
+	// SockJS service at "/echoSockJS"
+
 	@Bean
 	public DefaultSockJsService echoSockJsService() {
 		EchoSockJsHandler handler = new EchoSockJsHandler(this.rootConfig.echoService());
 		return new DefaultSockJsService("/echoSockJS", handler);
 	}
 
+	// Other mappings
+
 	@Bean
 	public SimpleUrlHandlerMapping handlerMapping() {
 
 		Map<String, Object> urlMap = new HashMap<String, Object>();
-		urlMap.put("/restart", createEchoConnectionRestartHandler());
+		urlMap.put("/restart", createEchoRestartHandler());
 //		urlMap.put("/echoHandler", createHttpRequestHandler(new EchoWebSocketHandler()));
 
 		SimpleUrlHandlerMapping handlerMapping = new SimpleUrlHandlerMapping();
@@ -53,12 +59,14 @@ public class WebConfig extends WebMvcConfigurerAdapter {
 		return handlerMapping;
 	}
 
-	private HttpRequestHandler createEchoConnectionRestartHandler() {
+	// A handler that restarts the EchoEndpointConnectionManager WebSocket client
+
+	private HttpRequestHandler createEchoRestartHandler() {
 		return new HttpRequestHandler() {
 			@Override
 			public void handleRequest(HttpServletRequest req, HttpServletResponse res) {
-				rootConfig.echoEndpointConnection().stop();
-				rootConfig.echoEndpointConnection().start();
+				rootConfig.echoEndpointConnectionManager().stop();
+				rootConfig.echoEndpointConnectionManager().start();
 			}
 		};
 	}
@@ -67,7 +75,7 @@ public class WebConfig extends WebMvcConfigurerAdapter {
 //		return new EndpointHttpRequestHandler(new EndpointHandshakeRequestHandler(webSocketHandler));
 //	}
 
-	// -------------------------------------------------------------
+	// Allow serving HTML files through the default Servlet
 
 	@Override
 	public void configureDefaultServletHandling(DefaultServletHandlerConfigurer configurer) {

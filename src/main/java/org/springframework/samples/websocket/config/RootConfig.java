@@ -78,7 +78,7 @@ public class RootConfig {
 	// Client EndpointConnectionManager connecting to the server echo endpoint
 
 	@Bean
-	public EndpointConnectionManager echoEndpointConnection() {
+	public EndpointConnectionManager echoEndpointConnectionManager() {
 		String uri = "ws://localhost:8080/spring-websocket-test/echoEndpoint";
 		EndpointConnectionManager connectionManager = new EndpointConnectionManager(SimpleClientEndpoint.class, uri);
 //		connectionManager.setAutoStartup(true);
