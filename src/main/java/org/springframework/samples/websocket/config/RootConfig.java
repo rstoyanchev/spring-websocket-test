@@ -15,11 +15,6 @@
  */
 package org.springframework.samples.websocket.config;
 
-import javax.websocket.HandshakeResponse;
-import javax.websocket.server.HandshakeRequest;
-import javax.websocket.server.ServerEndpointConfig;
-import javax.websocket.server.ServerEndpointConfig.Configurator;
-
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.samples.websocket.client.GreetingService;
@@ -52,14 +47,7 @@ public class RootConfig {
 
 	@Bean
 	public EndpointRegistration echoEndpoint() {
-		EndpointRegistration reg = new EndpointRegistration("/echoEndpoint", EchoEndpoint.class);
-		reg.setConfigurator(new Configurator() {
-			@Override
-			public void modifyHandshake(ServerEndpointConfig sec, HandshakeRequest request, HandshakeResponse response) {
-				throw new IllegalStateException("ha!");
-			}
-		});
-		return reg;
+		return new EndpointRegistration("/echoEndpoint", EchoEndpoint.class);
 	}
 
 	// javax.websocket.Endpoint singleton serves all incoming connections
