@@ -54,6 +54,7 @@
 
     <script type="text/javascript">
         var ws = null;
+        var transport = 'websocket';
 
         function setConnected(connected) {
             document.getElementById('connect').disabled = connected;
@@ -71,7 +72,8 @@
             // protocols_whitelist: ['websocket', 'xdr-streaming', 'xhr-streaming', 'iframe-eventsource',
             //     'iframe-htmlfile', 'xdr-polling', 'xhr-polling', 'iframe-xhr-polling', 'jsonp-polling']
             
-            ws = new SockJS('/spring-websocket-test/echoSockJS', undefined, {protocols_whitelist: ['xhr-streaming']});
+            console.log("transport " + transport);
+            ws = new SockJS('/spring-websocket-test/echoSockJS', undefined, {protocols_whitelist: [transport]});
 
             ws.onopen = function () {
                 setConnected(true);
@@ -104,14 +106,6 @@
             }
         }
 
-        function updateTarget(target) {
-            if (window.location.protocol == 'http:') {
-                document.getElementById('target').value = 'ws://' + window.location.host + target;
-            } else {
-                document.getElementById('target').value = 'wss://' + window.location.host + target;
-            }
-        }
-
         function log(message) {
             var console = document.getElementById('console');
             var p = document.createElement('p');
@@ -131,16 +125,18 @@
 <div>
     <div id="connect-container">
         <div>
-            <span>Connect to service implemented using:</span>
-            <!-- echo example using new programmatic API on the server side -->
-            <input id="radio1" type="radio" name="group1" value="/spring-websocket-test/echoSockJS"
-                   onclick="updateTarget(this.value);"> <label for="radio1">programmatic API</label>
-            <!-- echo example using new annotation API on the server side -->
-            <input id="radio2" type="radio" name="group1" value="/spring-websocket-test/echoSockJS"
-                   onclick="updateTarget(this.value);"> <label for="radio2">annotation API</label>
+            <span>Select transport:</span>
+            <select onchange="transport=this.value">
+	            <option value="websocket">websocket</option>
+	            <option value="xhr-polling">xhr-polling</option>
+	            <option value="jsonp-polling">jsonp-polling</option>
+	            <option value="xhr-streaming">xhr-streaming</option>
+	            <option value="iframe-eventsource">iframe-eventsource</option>
+	            <option value="iframe-htmlfile">iframe-htmlfile</option>
+            </select>
         </div>
         <div>
-            <input id="target" type="text" size="40" style="width: 350px"/>
+            <input id="target" type="text" size="40" style="width: 350px" value="/spring-websocket-test/echoSockJS"/>
         </div>
         <div>
             <button id="connect" onclick="connect();">Connect</button>
