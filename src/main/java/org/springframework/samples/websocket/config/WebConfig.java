@@ -10,6 +10,7 @@ import org.springframework.samples.websocket.echo.EchoWebSocketHandler;
 import org.springframework.samples.websocket.echo.sockjs.EchoSockJsHandler;
 import org.springframework.sockjs.server.support.DefaultSockJsService;
 import org.springframework.sockjs.server.support.SockJsHttpRequestHandler;
+import org.springframework.web.HttpRequestHandler;
 import org.springframework.web.servlet.config.annotation.DefaultServletHandlerConfigurer;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
@@ -27,34 +28,36 @@ public class WebConfig extends WebMvcConfigurerAdapter {
 	@Bean
 	public SimpleUrlHandlerMapping handlerMapping() {
 
-		SockJsHttpRequestHandler sockJsHandler = sockJsRequestHandler();
-
 		Map<String, Object> urlMap = new HashMap<String, Object>();
-		urlMap.put(sockJsHandler.getMappingPattern(), sockJsHandler);
+		urlMap.put(sockJsRequestHandler().getPattern(), sockJsRequestHandler());
 		urlMap.put("/echoWebSocket", webSocketHttpRequestHandler());
 
-		SimpleUrlHandlerMapping handlerMapping = new SimpleUrlHandlerMapping();
-		handlerMapping.setOrder(1);
-		handlerMapping.setUrlMap(urlMap);
+		SimpleUrlHandlerMapping hm = new SimpleUrlHandlerMapping();
+		hm.setOrder(1);
+		hm.setUrlMap(urlMap);
 
-		return handlerMapping;
+		return hm;
 	}
+
+	// SockJS HTTP request handler
 
 	@Bean
 	public SockJsHttpRequestHandler sockJsRequestHandler() {
-		EchoSockJsHandler sockJsHandler = new EchoSockJsHandler(this.rootConfig.echoService());
-		return new SockJsHttpRequestHandler(sockJsService(), sockJsHandler);
+		EchoSockJsHandler handler = new EchoSockJsHandler(this.rootConfig.echoService());
+		return new SockJsHttpRequestHandler("/echoSockJS", sockJsService(), handler);
 	}
 
 	@Bean
 	public DefaultSockJsService sockJsService() {
-		DefaultSockJsService sockJsService = new DefaultSockJsService("/echoSockJS");
+		DefaultSockJsService sockJsService = new DefaultSockJsService();
 		sockJsService.setHeartbeatTime(10000);
 		return sockJsService;
 	}
 
+	// WebSocket HTTP request handler
+
 	@Bean
-	public WebSocketHttpRequestHandler webSocketHttpRequestHandler() {
+	public HttpRequestHandler webSocketHttpRequestHandler() {
 		EchoWebSocketHandler webSocketHandler = new EchoWebSocketHandler(this.rootConfig.echoService());
 		return new WebSocketHttpRequestHandler(webSocketHandler);
 	}
