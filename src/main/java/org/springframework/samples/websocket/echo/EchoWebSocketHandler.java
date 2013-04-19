@@ -22,14 +22,14 @@ public class EchoWebSocketHandler extends WebSocketHandlerAdapter {
 	}
 
 	@Override
-	public void newSession(WebSocketSession session) throws Exception {
+	public void afterConnectionEstablished(WebSocketSession session) throws Exception {
 		logger.debug("Opened new session in instance " + this);
 	}
 
 	@Override
-	public void handleTextMessage(WebSocketSession session, String message) throws Exception {
+	public void handleTextMessage(String message, WebSocketSession session) throws Exception {
 		logger.debug("Echoing message: " + message);
-		session.sendText(this.echoService.getMessage(message));
+		session.sendTextMessage(this.echoService.getMessage(message));
 	}
 
 }

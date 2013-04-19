@@ -72,7 +72,6 @@
             // protocols_whitelist: ['websocket', 'xdr-streaming', 'xhr-streaming', 'iframe-eventsource',
             //     'iframe-htmlfile', 'xdr-polling', 'xhr-polling', 'iframe-xhr-polling', 'jsonp-polling']
             
-            console.log("transport " + transport);
             ws = new SockJS('/spring-websocket-test/echoSockJS', undefined, {protocols_whitelist: [transport]});
 
             ws.onopen = function () {
@@ -82,9 +81,10 @@
             ws.onmessage = function (event) {
                 log('Received: ' + event.data);
             };
-            ws.onclose = function () {
+            ws.onclose = function (event) {
                 setConnected(false);
                 log('Info: connection closed.');
+                log(event);
             };
         }
 

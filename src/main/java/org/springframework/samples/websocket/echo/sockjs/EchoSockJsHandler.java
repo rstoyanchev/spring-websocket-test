@@ -34,12 +34,12 @@ public class EchoSockJsHandler extends SockJsHandlerAdapter {
 	}
 
 	@Override
-	public void newSession(SockJsSession session) throws Exception {
-		logger.debug("Opened new session in instance " + this);
+	public void afterConnectionEstablished(SockJsSession session) throws Exception {
+		logger.debug("New connection in " + this);
 	}
 
 	@Override
-	public void handleMessage(SockJsSession session, String message) throws Exception {
+	public void handleMessage(String message, SockJsSession session) throws Exception {
 		logger.debug("Echoing message: " + message);
 		session.sendMessage(this.echoService.getMessage(message));
 	}
