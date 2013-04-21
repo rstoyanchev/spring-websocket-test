@@ -15,17 +15,23 @@
  */
 package org.springframework.samples.websocket.config;
 
+import javax.websocket.Endpoint;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.samples.websocket.client.GreetingService;
 import org.springframework.samples.websocket.client.SimpleClientEndpoint;
+import org.springframework.samples.websocket.client.SimpleClientWebSocketHandler;
 import org.springframework.samples.websocket.client.SimpleGreetingService;
 import org.springframework.samples.websocket.echo.DefaultEchoService;
 import org.springframework.samples.websocket.echo.EchoService;
 import org.springframework.samples.websocket.echo.endpoint.EchoEndpoint;
-import org.springframework.websocket.client.EndpointConnectionManager;
+import org.springframework.websocket.WebSocketHandler;
+import org.springframework.websocket.client.WebSocketConnectionManager;
+import org.springframework.websocket.client.endpoint.EndpointConnectionManager;
+import org.springframework.websocket.client.endpoint.StandardClientHandshakeHandler;
+import org.springframework.websocket.server.endpoint.EndpointExporter;
 import org.springframework.websocket.server.endpoint.EndpointRegistration;
-import org.springframework.websocket.server.endpoint.ServletEndpointExporter;
 
 @Configuration
 public class RootConfig {
@@ -36,8 +42,8 @@ public class RootConfig {
 	//   Detect/export @ServerEndpoint beans
 
 	@Bean
-	public ServletEndpointExporter endpointExporter() {
-		ServletEndpointExporter exporter = new ServletEndpointExporter();
+	public EndpointExporter endpointExporter() {
+		EndpointExporter exporter = new EndpointExporter();
 		// Uncomment when container scan is disabled (see <absolute-ordering> in web.xml)
 		// exporter.setAnnotatedEndpointClasses(EchoAnnotatedEndpoint.class, ChatAnnotatedEndpoint.class);
 		return exporter;
@@ -68,8 +74,19 @@ public class RootConfig {
 	@Bean
 	public EndpointConnectionManager echoEndpointConnectionManager() {
 		String uri = "ws://localhost:8080/spring-websocket-test/echoEndpoint";
-		EndpointConnectionManager connectionManager = new EndpointConnectionManager(SimpleClientEndpoint.class, uri);
-//		connectionManager.setAutoStartup(true);
+		Endpoint endpoint = new SimpleClientEndpoint(greetingService());
+		EndpointConnectionManager connectionManager = new EndpointConnectionManager(endpoint, uri);
+		connectionManager.setAutoStartup(true);
+		return connectionManager;
+	}
+
+	@Bean
+	public WebSocketConnectionManager webSocketConnectionManager() {
+		String uri = "ws://localhost:8080/spring-websocket-test/echoEndpoint";
+		WebSocketHandler webSocketHandler = new SimpleClientWebSocketHandler(greetingService());
+		WebSocketConnectionManager connectionManager = new WebSocketConnectionManager(
+				new StandardClientHandshakeHandler(), webSocketHandler, uri);
+		connectionManager.setAutoStartup(true);
 		return connectionManager;
 	}
 
