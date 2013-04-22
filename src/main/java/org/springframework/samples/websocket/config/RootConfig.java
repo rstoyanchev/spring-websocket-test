@@ -29,7 +29,7 @@ import org.springframework.samples.websocket.echo.endpoint.EchoEndpoint;
 import org.springframework.websocket.WebSocketHandler;
 import org.springframework.websocket.client.WebSocketConnectionManager;
 import org.springframework.websocket.client.endpoint.EndpointConnectionManager;
-import org.springframework.websocket.client.endpoint.StandardClientHandshakeHandler;
+import org.springframework.websocket.client.endpoint.StandardWebSocketClient;
 import org.springframework.websocket.server.endpoint.EndpointExporter;
 import org.springframework.websocket.server.endpoint.EndpointRegistration;
 
@@ -68,25 +68,32 @@ public class RootConfig {
 		return new DefaultEchoService("Did you say \"%s\"?");
 	}
 
-	// --------------------------------------------------------------------------
-	// Client EndpointConnectionManager connecting to the server echo endpoint
+	// javax.websocket.Endpoint client
 
 	@Bean
 	public EndpointConnectionManager echoEndpointConnectionManager() {
+
 		String uri = "ws://localhost:8080/spring-websocket-test/echoEndpoint";
 		Endpoint endpoint = new SimpleClientEndpoint(greetingService());
+
 		EndpointConnectionManager connectionManager = new EndpointConnectionManager(endpoint, uri);
 		connectionManager.setAutoStartup(true);
+
 		return connectionManager;
 	}
 
+	// WebSocketHandler client
+
 	@Bean
 	public WebSocketConnectionManager webSocketConnectionManager() {
+
 		String uri = "ws://localhost:8080/spring-websocket-test/echoEndpoint";
-		WebSocketHandler webSocketHandler = new SimpleClientWebSocketHandler(greetingService());
-		WebSocketConnectionManager connectionManager = new WebSocketConnectionManager(
-				new StandardClientHandshakeHandler(), webSocketHandler, uri);
+		StandardWebSocketClient client = new StandardWebSocketClient();
+		WebSocketHandler handler = new SimpleClientWebSocketHandler(greetingService());
+
+		WebSocketConnectionManager connectionManager = new WebSocketConnectionManager(client, handler, uri);
 		connectionManager.setAutoStartup(true);
+
 		return connectionManager;
 	}
 
