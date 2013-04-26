@@ -21,10 +21,10 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.websocket.TextMessage;
-import org.springframework.websocket.WebSocketHandlerAdapter.TextMessageHandlerAdapter;
 import org.springframework.websocket.WebSocketSession;
+import org.springframework.websocket.adapter.TextWebSocketHandlerAdapter;
 
-public class SimpleClientWebSocketHandler extends TextMessageHandlerAdapter {
+public class SimpleClientWebSocketHandler extends TextWebSocketHandlerAdapter {
 
 	private Log logger = LogFactory.getLog(SimpleClientWebSocketHandler.class);
 
@@ -37,7 +37,7 @@ public class SimpleClientWebSocketHandler extends TextMessageHandlerAdapter {
 	}
 
 	@Override
-	public void afterConnectionEstablished(WebSocketSession session) throws Exception {
+	public void afterConnectionEstablished(WebSocketSession session) {
 		try {
 			TextMessage message = new TextMessage(this.greetingService.getGreeting());
 			session.sendMessage(message);
@@ -48,7 +48,7 @@ public class SimpleClientWebSocketHandler extends TextMessageHandlerAdapter {
 	}
 
 	@Override
-	public void handleTextMessage(TextMessage message, WebSocketSession session) throws Exception {
+	public void handleMessage(WebSocketSession session, TextMessage message) {
 		logger.debug("Received: " + message);
 		try {
 			session.close();

@@ -89,7 +89,7 @@ public class RootConfig {
 
 		String uri = "ws://localhost:8080/spring-websocket-test/echoEndpoint";
 		StandardWebSocketClient client = new StandardWebSocketClient();
-		WebSocketHandler handler = new SimpleClientWebSocketHandler(greetingService());
+		WebSocketHandler<?> handler = new SimpleClientWebSocketHandler(greetingService());
 
 		WebSocketConnectionManager connectionManager = new WebSocketConnectionManager(client, handler, uri);
 		connectionManager.setAutoStartup(true);
