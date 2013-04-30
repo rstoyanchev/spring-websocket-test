@@ -48,7 +48,7 @@ public class SimpleClientWebSocketHandler extends TextWebSocketHandlerAdapter {
 	}
 
 	@Override
-	public void handleMessage(WebSocketSession session, TextMessage message) {
+	public void handleTextMessage(WebSocketSession session, TextMessage message) {
 		logger.debug("Received: " + message);
 		try {
 			session.close();

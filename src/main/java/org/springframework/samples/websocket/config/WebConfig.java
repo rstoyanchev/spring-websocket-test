@@ -14,10 +14,9 @@ import org.springframework.web.servlet.config.annotation.DefaultServletHandlerCo
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 import org.springframework.web.servlet.handler.SimpleUrlHandlerMapping;
-import org.springframework.websocket.HandlerProvider;
 import org.springframework.websocket.WebSocketHandler;
 import org.springframework.websocket.server.support.WebSocketHttpRequestHandler;
-import org.springframework.websocket.support.BeanCreatingHandlerProvider;
+import org.springframework.websocket.support.PerConnectionWebSocketHandlerProxy;
 
 @Configuration
 @EnableWebMvc
@@ -49,8 +48,8 @@ public class WebConfig extends WebMvcConfigurerAdapter {
 	}
 
 	@Bean
-	public HandlerProvider<WebSocketHandler<?>> echoWebSocketHandler() {
-		return new BeanCreatingHandlerProvider<WebSocketHandler<?>>(EchoWebSocketHandler.class);
+	public WebSocketHandler echoWebSocketHandler() {
+		return new PerConnectionWebSocketHandlerProxy(EchoWebSocketHandler.class);
 	}
 
 	@Bean

@@ -16,13 +16,23 @@
 
 package org.springframework.samples.websocket.config;
 
+import org.springframework.util.ClassUtils;
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 
 public class DispatcherServletInitializer extends AbstractAnnotationConfigDispatcherServletInitializer {
 
+	private static final boolean standardWebSocketPresent = ClassUtils.isPresent(
+			"javax.websocket.Endpoint", DispatcherServletInitializer.class.getClassLoader());
+
+
 	@Override
 	protected Class<?>[] getRootConfigClasses() {
-		return new Class<?>[] { RootConfig.class };
+		if (standardWebSocketPresent) {
+			return new Class<?>[] { RootConfig.class, EndpointConfig.class };
+		}
+		else {
+			return new Class<?>[] { RootConfig.class };
+		}
 	}
 
 	@Override

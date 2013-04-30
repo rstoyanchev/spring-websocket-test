@@ -28,11 +28,10 @@ public class EchoWebSocketHandler extends TextWebSocketHandlerAdapter {
 	@Override
 	public void afterConnectionEstablished(WebSocketSession session) {
 		logger.debug("Opened new session in instance " + this);
-//		throw new UnsupportedOperationException("!");
 	}
 
 	@Override
-	public void handleMessage(WebSocketSession session, TextMessage message) {
+	public void handleTextMessage(WebSocketSession session, TextMessage message) {
 		logger.debug("Echoing message: " + message);
 		String responsePayload = this.echoService.getMessage(message.getPayload());
 		try {
