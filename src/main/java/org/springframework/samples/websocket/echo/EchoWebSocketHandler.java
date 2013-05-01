@@ -1,7 +1,5 @@
 package org.springframework.samples.websocket.echo;
 
-import java.io.IOException;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,25 +29,15 @@ public class EchoWebSocketHandler extends TextWebSocketHandlerAdapter {
 	}
 
 	@Override
-	public void handleTextMessage(WebSocketSession session, TextMessage message) {
+	public void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
 		logger.debug("Echoing message: " + message);
 		String responsePayload = this.echoService.getMessage(message.getPayload());
-		try {
-			session.sendMessage(new TextMessage(responsePayload));
-		}
-		catch (IOException e) {
-			e.printStackTrace();
-		}
+		session.sendMessage(new TextMessage(responsePayload));
 	}
 
 	@Override
-	public void handleTransportError(WebSocketSession session, Throwable exception) {
-		try {
-			session.close(CloseStatus.SERVER_ERROR);
-		}
-		catch (Exception e) {
-			e.printStackTrace();
-		}
+	public void handleTransportError(WebSocketSession session, Throwable exception) throws Exception {
+		session.close(CloseStatus.SERVER_ERROR);
 	}
 
 }

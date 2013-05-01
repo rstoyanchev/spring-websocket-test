@@ -17,16 +17,17 @@ package org.springframework.samples.websocket.echo;
 
 import java.io.IOException;
 
+import javax.websocket.Endpoint;
+
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.samples.websocket.client.GreetingService;
-import org.springframework.samples.websocket.client.SimpleClientWebSocketHandler;
+import org.springframework.samples.websocket.client.SimpleClientEndpoint;
 import org.springframework.samples.websocket.client.SimpleGreetingService;
-import org.springframework.websocket.client.WebSocketConnectionManager;
-import org.springframework.websocket.client.jetty.JettyWebSocketClient;
+import org.springframework.websocket.client.endpoint.EndpointConnectionManager;
 
-public class JettyClientApp {
+public class Jsr356ClientApp {
 
 	private static final String WS_URI = "ws://localhost:8080/spring-websocket-test/echoWebSocket";
 
@@ -37,6 +38,9 @@ public class JettyClientApp {
 			System.in.read();
 			cxt.close();
 		}
+		catch (Throwable t) {
+			t.printStackTrace();
+		}
 		finally {
 			System.exit(0);
 		}
@@ -46,22 +50,13 @@ public class JettyClientApp {
 	static class ClientConfig {
 
 		@Bean
-		public WebSocketConnectionManager wsConnectionManager() {
+		public EndpointConnectionManager wsConnectionManager() {
 
-			WebSocketConnectionManager manager = new WebSocketConnectionManager(client(), handler(), WS_URI);
+			Endpoint endpoint = new SimpleClientEndpoint(greetingService());
+			EndpointConnectionManager manager = new EndpointConnectionManager(endpoint, WS_URI);
 			manager.setAutoStartup(true);
 
 			return manager;
-		}
-
-		@Bean
-		public JettyWebSocketClient client() {
-			return new JettyWebSocketClient();
-		}
-
-		@Bean
-		public SimpleClientWebSocketHandler handler() {
-			return new SimpleClientWebSocketHandler(greetingService());
 		}
 
 		@Bean

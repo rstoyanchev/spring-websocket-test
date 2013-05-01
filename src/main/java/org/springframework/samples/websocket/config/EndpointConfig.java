@@ -15,18 +15,10 @@
  */
 package org.springframework.samples.websocket.config;
 
-import javax.websocket.Endpoint;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.samples.websocket.client.SimpleClientEndpoint;
-import org.springframework.samples.websocket.client.SimpleClientWebSocketHandler;
 import org.springframework.samples.websocket.echo.endpoint.EchoEndpoint;
-import org.springframework.websocket.WebSocketHandler;
-import org.springframework.websocket.client.WebSocketConnectionManager;
-import org.springframework.websocket.client.endpoint.EndpointConnectionManager;
-import org.springframework.websocket.client.endpoint.StandardWebSocketClient;
 import org.springframework.websocket.server.endpoint.EndpointExporter;
 import org.springframework.websocket.server.endpoint.EndpointRegistration;
 
@@ -62,35 +54,6 @@ public class EndpointConfig {
 	@Bean
 	public EndpointRegistration echoEndpointSingleton() {
 		return new EndpointRegistration("/echoEndpointSingleton", new EchoEndpoint(this.rootConfig.echoService()));
-	}
-
-	// javax.websocket.Endpoint client
-
-	@Bean
-	public EndpointConnectionManager echoEndpointConnectionManager() {
-
-		String uri = "ws://localhost:8080/spring-websocket-test/echoEndpoint";
-		Endpoint endpoint = new SimpleClientEndpoint(this.rootConfig.greetingService());
-
-		EndpointConnectionManager connectionManager = new EndpointConnectionManager(endpoint, uri);
-		connectionManager.setAutoStartup(true);
-
-		return connectionManager;
-	}
-
-	// Standard WebSocketHandler client
-
-	@Bean
-	public WebSocketConnectionManager webSocketConnectionManager() {
-
-		String uri = "ws://localhost:8080/spring-websocket-test/echoEndpoint";
-		StandardWebSocketClient client = new StandardWebSocketClient();
-		WebSocketHandler handler = new SimpleClientWebSocketHandler(this.rootConfig.greetingService());
-
-		WebSocketConnectionManager connectionManager = new WebSocketConnectionManager(client, handler, uri);
-		connectionManager.setAutoStartup(true);
-
-		return connectionManager;
 	}
 
 }

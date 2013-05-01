@@ -23,10 +23,12 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.samples.websocket.client.GreetingService;
 import org.springframework.samples.websocket.client.SimpleClientWebSocketHandler;
 import org.springframework.samples.websocket.client.SimpleGreetingService;
+import org.springframework.websocket.TextMessage;
+import org.springframework.websocket.WebSocketSession;
 import org.springframework.websocket.client.WebSocketConnectionManager;
-import org.springframework.websocket.client.jetty.JettyWebSocketClient;
+import org.springframework.websocket.client.endpoint.StandardWebSocketClient;
 
-public class JettyClientApp {
+public class StandardWebSocketHandlerClientApp {
 
 	private static final String WS_URI = "ws://localhost:8080/spring-websocket-test/echoWebSocket";
 
@@ -36,6 +38,9 @@ public class JettyClientApp {
 			AnnotationConfigApplicationContext cxt = new AnnotationConfigApplicationContext(ClientConfig.class);
 			System.in.read();
 			cxt.close();
+		}
+		catch (Throwable t) {
+			t.printStackTrace();
 		}
 		finally {
 			System.exit(0);
@@ -55,13 +60,24 @@ public class JettyClientApp {
 		}
 
 		@Bean
-		public JettyWebSocketClient client() {
-			return new JettyWebSocketClient();
+		public StandardWebSocketClient client() {
+			return new StandardWebSocketClient();
 		}
 
 		@Bean
 		public SimpleClientWebSocketHandler handler() {
-			return new SimpleClientWebSocketHandler(greetingService());
+			return new SimpleClientWebSocketHandler(greetingService()) {
+
+				@Override
+				public void handleTextMessage(WebSocketSession session, TextMessage message) {
+					try {
+						session.sendMessage(message);
+					}
+					catch (IOException e) {
+						e.printStackTrace();
+					}
+				}
+			};
 		}
 
 		@Bean

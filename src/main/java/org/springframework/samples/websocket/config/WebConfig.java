@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.samples.websocket.echo.EchoWebSocketHandler;
+import org.springframework.samples.websocket.echo.IntermittentlyFailingEchoWebSocketHandler;
+import org.springframework.samples.websocket.snake.websockethandler.SnakeWebSocketHandler;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskScheduler;
 import org.springframework.sockjs.server.support.DefaultSockJsService;
 import org.springframework.sockjs.server.support.SockJsHttpRequestHandler;
@@ -29,16 +31,25 @@ public class WebConfig extends WebMvcConfigurerAdapter {
 	@Bean
 	public SimpleUrlHandlerMapping handlerMapping() {
 
-		DefaultSockJsService sockJsService = new DefaultSockJsService(sockJsTaskScheduler());
+		SockJsHttpRequestHandler echoSockJsHandler = new SockJsHttpRequestHandler(
+				"/echoSockJS", new DefaultSockJsService(sockJsTaskScheduler()), echoWebSocketHandler());
 
-		SockJsHttpRequestHandler sockJsHttpRequestHandler =
-				new SockJsHttpRequestHandler("/echoSockJS", sockJsService, echoWebSocketHandler());
-
-		WebSocketHttpRequestHandler webSocketHttpRequestHandler = new WebSocketHttpRequestHandler(echoWebSocketHandler());
+		SockJsHttpRequestHandler snakeSockJsHandler = new SockJsHttpRequestHandler(
+				"/snakeSockJS", new DefaultSockJsService(sockJsTaskScheduler()), snakeWebSocketHandler());
 
 		Map<String, Object> urlMap = new HashMap<String, Object>();
-		urlMap.put(sockJsHttpRequestHandler.getPattern(), sockJsHttpRequestHandler);
-		urlMap.put("/echoWebSocket", webSocketHttpRequestHandler);
+
+		urlMap.put(echoSockJsHandler.getPattern(), echoSockJsHandler);
+		urlMap.put(snakeSockJsHandler.getPattern(), snakeSockJsHandler);
+
+		urlMap.put("/echoWebSocket",
+				new WebSocketHttpRequestHandler(echoWebSocketHandler()));
+
+		urlMap.put("/echoIntermittentFailure",
+				new WebSocketHttpRequestHandler(new IntermittentlyFailingEchoWebSocketHandler()));
+
+		urlMap.put("/snakeWebSocket",
+				new WebSocketHttpRequestHandler(snakeWebSocketHandler()));
 
 		SimpleUrlHandlerMapping hm = new SimpleUrlHandlerMapping();
 		hm.setOrder(1);
@@ -50,6 +61,11 @@ public class WebConfig extends WebMvcConfigurerAdapter {
 	@Bean
 	public WebSocketHandler echoWebSocketHandler() {
 		return new PerConnectionWebSocketHandlerProxy(EchoWebSocketHandler.class);
+	}
+
+	@Bean
+	public WebSocketHandler snakeWebSocketHandler() {
+		return new SnakeWebSocketHandler();
 	}
 
 	@Bean

@@ -15,8 +15,6 @@
  */
 package org.springframework.samples.websocket.client;
 
-import java.io.IOException;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +24,7 @@ import org.springframework.websocket.adapter.TextWebSocketHandlerAdapter;
 
 public class SimpleClientWebSocketHandler extends TextWebSocketHandlerAdapter {
 
-	private Log logger = LogFactory.getLog(SimpleClientWebSocketHandler.class);
+	protected Log logger = LogFactory.getLog(SimpleClientWebSocketHandler.class);
 
 	private final GreetingService greetingService;
 
@@ -37,25 +35,15 @@ public class SimpleClientWebSocketHandler extends TextWebSocketHandlerAdapter {
 	}
 
 	@Override
-	public void afterConnectionEstablished(WebSocketSession session) {
-		try {
-			TextMessage message = new TextMessage(this.greetingService.getGreeting());
-			session.sendMessage(message);
-		}
-		catch (IOException e) {
-			e.printStackTrace();
-		}
+	public void afterConnectionEstablished(WebSocketSession session) throws Exception {
+		TextMessage message = new TextMessage(this.greetingService.getGreeting());
+		session.sendMessage(message);
 	}
 
 	@Override
-	public void handleTextMessage(WebSocketSession session, TextMessage message) {
+	public void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
 		logger.debug("Received: " + message);
-		try {
-			session.close();
-		}
-		catch (IOException e) {
-			logger.error("Failed to close", e);
-		}
+		session.close();
 	}
 
 }
