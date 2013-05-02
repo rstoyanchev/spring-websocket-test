@@ -23,8 +23,6 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.samples.websocket.client.GreetingService;
 import org.springframework.samples.websocket.client.SimpleClientWebSocketHandler;
 import org.springframework.samples.websocket.client.SimpleGreetingService;
-import org.springframework.websocket.TextMessage;
-import org.springframework.websocket.WebSocketSession;
 import org.springframework.websocket.client.WebSocketConnectionManager;
 import org.springframework.websocket.client.endpoint.StandardWebSocketClient;
 
@@ -66,18 +64,7 @@ public class StandardWebSocketHandlerClientApp {
 
 		@Bean
 		public SimpleClientWebSocketHandler handler() {
-			return new SimpleClientWebSocketHandler(greetingService()) {
-
-				@Override
-				public void handleTextMessage(WebSocketSession session, TextMessage message) {
-					try {
-						session.sendMessage(message);
-					}
-					catch (IOException e) {
-						e.printStackTrace();
-					}
-				}
-			};
+			return new SimpleClientWebSocketHandler(greetingService());
 		}
 
 		@Bean
