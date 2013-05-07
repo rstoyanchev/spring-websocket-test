@@ -17,10 +17,10 @@ package org.springframework.samples.websocket.echo;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.websocket.CloseStatus;
-import org.springframework.websocket.TextMessage;
-import org.springframework.websocket.WebSocketSession;
-import org.springframework.websocket.adapter.WebSocketHandlerAdapter;
+import org.springframework.web.socket.CloseStatus;
+import org.springframework.web.socket.TextMessage;
+import org.springframework.web.socket.WebSocketSession;
+import org.springframework.web.socket.adapter.WebSocketHandlerAdapter;
 
 
 public class IntermittentlyFailingEchoWebSocketHandler extends WebSocketHandlerAdapter {

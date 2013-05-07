@@ -29,7 +29,7 @@ import javax.websocket.server.ServerEndpoint;
 
 import org.springframework.samples.websocket.snake.Direction;
 import org.springframework.samples.websocket.snake.Location;
-import org.springframework.websocket.server.endpoint.SpringConfigurator;
+import org.springframework.web.socket.server.endpoint.SpringConfigurator;
 
 @ServerEndpoint(value = "/snake", configurator=SpringConfigurator.class)
 public class SnakeAnnotation {

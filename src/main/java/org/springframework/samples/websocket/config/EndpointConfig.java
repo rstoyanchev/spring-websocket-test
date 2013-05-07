@@ -19,8 +19,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.samples.websocket.echo.endpoint.EchoEndpoint;
-import org.springframework.websocket.server.endpoint.EndpointExporter;
-import org.springframework.websocket.server.endpoint.EndpointRegistration;
+import org.springframework.web.socket.server.endpoint.EndpointExporter;
+import org.springframework.web.socket.server.endpoint.EndpointRegistration;
 
 @Configuration
 public class EndpointConfig {

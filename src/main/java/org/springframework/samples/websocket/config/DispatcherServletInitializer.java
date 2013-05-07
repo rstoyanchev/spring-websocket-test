@@ -16,6 +16,8 @@
 
 package org.springframework.samples.websocket.config;
 
+import javax.servlet.ServletRegistration.Dynamic;
+
 import org.springframework.util.ClassUtils;
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 
@@ -31,6 +33,7 @@ public class DispatcherServletInitializer extends AbstractAnnotationConfigDispat
 			return new Class<?>[] { RootConfig.class, EndpointConfig.class };
 		}
 		else {
+			logger.debug("Standard Java for WebSocket not present, JSR-356 endpoints will not be loaded");
 			return new Class<?>[] { RootConfig.class };
 		}
 	}
@@ -43,6 +46,11 @@ public class DispatcherServletInitializer extends AbstractAnnotationConfigDispat
 	@Override
 	protected String[] getServletMappings() {
 		return new String[] { "/" };
+	}
+
+	@Override
+	protected void customizeRegistration(Dynamic registration) {
+		registration.setInitParameter("dispatchOptionsRequest", "true");
 	}
 
 }

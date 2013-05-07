@@ -23,8 +23,8 @@ import java.util.Deque;
 import org.springframework.samples.websocket.snake.Direction;
 import org.springframework.samples.websocket.snake.Location;
 import org.springframework.samples.websocket.snake.SnakeUtils;
-import org.springframework.websocket.TextMessage;
-import org.springframework.websocket.WebSocketSession;
+import org.springframework.web.socket.TextMessage;
+import org.springframework.web.socket.WebSocketSession;
 
 
 public class Snake {

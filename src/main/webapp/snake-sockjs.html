@@ -190,7 +190,7 @@
 			//     'iframe-htmlfile', 'xdr-polling', 'xhr-polling', 'iframe-xhr-polling', 'jsonp-polling']
 			
         	var transport = 'xhr-streaming';
-			Game.socket = new SockJS('/spring-websocket-test/snakeSockJS', undefined, {protocols_whitelist: [transport]});
+			Game.socket = new SockJS('/spring-websocket-test/sockjs/snake', undefined, {protocols_whitelist: [transport]});
 
             Game.socket.onopen = function () {
                 // Socket open.. start the game loop.

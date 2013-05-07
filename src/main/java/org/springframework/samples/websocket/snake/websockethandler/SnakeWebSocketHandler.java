@@ -23,10 +23,10 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 import org.springframework.samples.websocket.snake.Direction;
 import org.springframework.samples.websocket.snake.Location;
-import org.springframework.websocket.CloseStatus;
-import org.springframework.websocket.TextMessage;
-import org.springframework.websocket.WebSocketSession;
-import org.springframework.websocket.adapter.TextWebSocketHandlerAdapter;
+import org.springframework.web.socket.CloseStatus;
+import org.springframework.web.socket.TextMessage;
+import org.springframework.web.socket.WebSocketSession;
+import org.springframework.web.socket.adapter.TextWebSocketHandlerAdapter;
 
 public class SnakeWebSocketHandler extends TextWebSocketHandlerAdapter {
 

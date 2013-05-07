@@ -3,11 +3,11 @@ package org.springframework.samples.websocket.echo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.websocket.CloseStatus;
-import org.springframework.websocket.TextMessage;
-import org.springframework.websocket.WebSocketHandler;
-import org.springframework.websocket.WebSocketSession;
-import org.springframework.websocket.adapter.TextWebSocketHandlerAdapter;
+import org.springframework.web.socket.CloseStatus;
+import org.springframework.web.socket.TextMessage;
+import org.springframework.web.socket.WebSocketHandler;
+import org.springframework.web.socket.WebSocketSession;
+import org.springframework.web.socket.adapter.TextWebSocketHandlerAdapter;
 
 /**
  * Echo messages by implementing a Spring {@link WebSocketHandler} abstraction.
@@ -30,9 +30,9 @@ public class EchoWebSocketHandler extends TextWebSocketHandlerAdapter {
 
 	@Override
 	public void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
-		logger.debug("Echoing message: " + message);
-		String responsePayload = this.echoService.getMessage(message.getPayload());
-		session.sendMessage(new TextMessage(responsePayload));
+		String echoMessage = this.echoService.getMessage(message.getPayload());
+		logger.debug(echoMessage);
+		session.sendMessage(new TextMessage(echoMessage));
 	}
 
 	@Override

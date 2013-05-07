@@ -18,9 +18,9 @@ package org.springframework.samples.websocket.client;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.websocket.TextMessage;
-import org.springframework.websocket.WebSocketSession;
-import org.springframework.websocket.adapter.TextWebSocketHandlerAdapter;
+import org.springframework.web.socket.TextMessage;
+import org.springframework.web.socket.WebSocketSession;
+import org.springframework.web.socket.adapter.TextWebSocketHandlerAdapter;
 
 public class SimpleClientWebSocketHandler extends TextWebSocketHandlerAdapter {
 

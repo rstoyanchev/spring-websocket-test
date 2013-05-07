@@ -23,8 +23,8 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.samples.websocket.client.GreetingService;
 import org.springframework.samples.websocket.client.SimpleClientWebSocketHandler;
 import org.springframework.samples.websocket.client.SimpleGreetingService;
-import org.springframework.websocket.client.WebSocketConnectionManager;
-import org.springframework.websocket.client.jetty.JettyWebSocketClient;
+import org.springframework.web.socket.client.WebSocketConnectionManager;
+import org.springframework.web.socket.client.jetty.JettyWebSocketClient;
 
 public class JettyClientApp {
 

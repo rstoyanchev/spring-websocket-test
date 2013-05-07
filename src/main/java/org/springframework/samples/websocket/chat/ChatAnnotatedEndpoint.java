@@ -27,7 +27,7 @@ import javax.websocket.OnOpen;
 import javax.websocket.Session;
 import javax.websocket.server.ServerEndpoint;
 
-import org.springframework.websocket.server.endpoint.SpringConfigurator;
+import org.springframework.web.socket.server.endpoint.SpringConfigurator;
 
 @ServerEndpoint(value = "/chatAnnotatedEndpoint", configurator=SpringConfigurator.class)
 public class ChatAnnotatedEndpoint {

@@ -25,7 +25,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.samples.websocket.client.GreetingService;
 import org.springframework.samples.websocket.client.SimpleClientEndpoint;
 import org.springframework.samples.websocket.client.SimpleGreetingService;
-import org.springframework.websocket.client.endpoint.EndpointConnectionManager;
+import org.springframework.web.socket.client.endpoint.EndpointConnectionManager;
 
 public class Jsr356ClientApp {
 

@@ -11,18 +11,14 @@
 	</appender>
 	
 	<logger name="org.springframework.samples">
-		<level value="debug" />
+		<level value="trace" />
 	</logger>
 	
 	<logger name="org.springframework.web">
 		<level value="debug" />
 	</logger>
 
-	<logger name="org.springframework.sockjs">
-		<level value="trace" />
-	</logger>
-
-	<logger name="org.springframework.websocket">
+	<logger name="org.springframework.web.socket">
 		<level value="trace" />
 	</logger>
 
