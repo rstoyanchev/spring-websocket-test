@@ -53,7 +53,9 @@ public class SimpleClientEndpoint extends Endpoint {
 				logger.debug("Received message: " + message);
 				try {
 					session.close();
-				} catch (IOException e) {
+					logger.debug("Closed session");
+				}
+				catch (IOException e) {
 					logger.error("Failed to close", e);
 				}
 			}

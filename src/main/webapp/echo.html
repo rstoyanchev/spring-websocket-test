@@ -131,12 +131,15 @@
     <div id="connect-container">
         <div>
             <span>Connect to service implemented using:</span>
-            <!-- echo example using new programmatic API on the server side -->
+            <br>
             <input id="radio1" type="radio" name="group1" value="/spring-websocket-test/echoEndpoint"
-                   onclick="updateTarget(this.value);"> <label for="radio1">programmatic API</label>
-            <!-- echo example using new annotation API on the server side -->
+                   onclick="updateTarget(this.value);"> <label for="radio1">Endpoint sub-class</label>
+            <br>
             <input id="radio2" type="radio" name="group1" value="/spring-websocket-test/echoAnnotatedEndpoint"
-                   onclick="updateTarget(this.value);"> <label for="radio2">annotation API</label>
+                   onclick="updateTarget(this.value);"> <label for="radio2">@ServerEndpoint</label>
+            <br>
+            <input id="radio2" type="radio" name="group1" value="/spring-websocket-test/echoWebSocketHandler"
+                   onclick="updateTarget(this.value);"> <label for="radio2">WebSocketHandler</label>
         </div>
         <div>
             <input id="target" type="text" size="40" style="width: 350px"/>

@@ -14,46 +14,50 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package org.springframework.samples.websocket.echo.endpoint;
+package org.springframework.samples.websocket.echo;
 
 import java.io.IOException;
 
-import javax.websocket.Endpoint;
-import javax.websocket.EndpointConfig;
-import javax.websocket.MessageHandler;
+import javax.websocket.OnError;
+import javax.websocket.OnMessage;
+import javax.websocket.OnOpen;
 import javax.websocket.Session;
+import javax.websocket.server.ServerEndpoint;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.samples.websocket.echo.EchoService;
+import org.springframework.web.socket.server.endpoint.SpringConfigurator;
 
-public class EchoEndpoint extends Endpoint {
+@ServerEndpoint(value = "/echoAnnotatedEndpoint", configurator = SpringConfigurator.class)
+public class EchoAnnotatedEndpoint {
 
-	private static Logger logger = LoggerFactory.getLogger(EchoEndpoint.class);
+	private static Logger logger = LoggerFactory.getLogger(EchoAnnotatedEndpoint.class);
 
 	private final EchoService echoService;
 
 	@Autowired
-	public EchoEndpoint(EchoService echoService) {
+	public EchoAnnotatedEndpoint(EchoService echoService) {
 		this.echoService = echoService;
 	}
 
-	@Override
-	public void onOpen(final Session session, EndpointConfig endpointConfig) {
-
+	@OnOpen
+	public void newSession() {
 		logger.debug("Opened new session in instance " + this);
-
-		session.addMessageHandler(new MessageHandler.Whole<String>() {
-			@Override
-			public void onMessage(String message) {
-				try {
-					logger.debug("Echoing message: " + message);
-					session.getBasicRemote().sendText(echoService.getMessage(message));
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-			}
-		});
 	}
+
+	@OnMessage
+	public void echoTextMessage(Session session, String msg, boolean last) {
+		try {
+			session.getBasicRemote().sendText(this.echoService.getMessage(msg), last);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	@OnError
+	public void handleError(Throwable t) {
+		logger.error("handleError", t);
+	}
+
 }

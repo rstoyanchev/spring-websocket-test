@@ -111,7 +111,7 @@
 		<dependency>
 			<groupId>org.eclipse.jetty.websocket</groupId>
 			<artifactId>websocket-client</artifactId>
-			<version>9.0.2.v20130417</version>
+			<version>9.0.3.v20130506</version>
 			<scope>test</scope>
 		</dependency>
 		
@@ -194,6 +194,16 @@
 				    <downloadSources>true</downloadSources>
 				    <downloadJavadocs>false</downloadJavadocs>
 				    <wtpversion>2.0</wtpversion>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.eclipse.jetty</groupId>
+				<artifactId>jetty-maven-plugin</artifactId>
+				<version>9.0.3.v20130506</version>
+				<configuration>
+					<webApp>
+						<contextPath>/spring-sockjs-protocol-webapp</contextPath>
+					</webApp>
 				</configuration>
 			</plugin>
 		</plugins>

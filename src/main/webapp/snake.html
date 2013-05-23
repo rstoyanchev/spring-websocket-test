@@ -111,9 +111,9 @@
                 }
             }, false);
             if (window.location.protocol == 'http:') {
-                Game.connect('ws://' + window.location.host + '/spring-websocket-test/snakeWebSocket');
+                Game.connect('ws://' + window.location.host + '/spring-websocket-test/snakeWebSocketHandler');
             } else {
-                Game.connect('wss://' + window.location.host + '/spring-websocket-test/snakeWebSocket');
+                Game.connect('wss://' + window.location.host + '/spring-websocket-test/snakeWebSocketHandler');
             }
         };
 

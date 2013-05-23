@@ -18,9 +18,9 @@ package org.springframework.samples.websocket.config;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.samples.websocket.echo.endpoint.EchoEndpoint;
-import org.springframework.web.socket.server.endpoint.EndpointExporter;
-import org.springframework.web.socket.server.endpoint.EndpointRegistration;
+import org.springframework.samples.websocket.echo.EchoEndpoint;
+import org.springframework.web.socket.server.endpoint.ServerEndpointExporter;
+import org.springframework.web.socket.server.endpoint.ServerEndpointRegistration;
 
 @Configuration
 public class EndpointConfig {
@@ -28,32 +28,19 @@ public class EndpointConfig {
 	@Autowired
 	private RootConfig rootConfig;
 
-
-	// -------------------------------------------------------------------------------------
-	// EndpointExporter:
-	//   Detect/export javax.websocket.server.ServerEndpointConfig beans(type-based API)
-	//   Detect/export @ServerEndpoint beans
-
 	@Bean
-	public EndpointExporter endpointExporter() {
-		EndpointExporter exporter = new EndpointExporter();
-		// Uncomment when container scan is disabled (see <absolute-ordering> in web.xml)
-		// exporter.setAnnotatedEndpointClasses(EchoAnnotatedEndpoint.class, ChatAnnotatedEndpoint.class);
-		return exporter;
+	public ServerEndpointExporter endpointExporter() {
+		return new ServerEndpointExporter();
 	}
 
-	// Spring initialized javax.websocket.Endpoint with instance per connection scope semantics
-
 	@Bean
-	public EndpointRegistration echoEndpoint() {
-		return new EndpointRegistration("/echoEndpoint", EchoEndpoint.class);
+	public ServerEndpointRegistration echoEndpoint() {
+		return new ServerEndpointRegistration("/echoEndpoint", EchoEndpoint.class);
 	}
 
-	// javax.websocket.Endpoint singleton serves all incoming connections
-
 	@Bean
-	public EndpointRegistration echoEndpointSingleton() {
-		return new EndpointRegistration("/echoEndpointSingleton", new EchoEndpoint(this.rootConfig.echoService()));
+	public ServerEndpointRegistration echoEndpointSingleton() {
+		return new ServerEndpointRegistration("/echoEndpointSingleton", new EchoEndpoint(this.rootConfig.echoService()));
 	}
 
 }
