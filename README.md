@@ -15,8 +15,6 @@ The easiest way to run on Jetty 9.0.4:
 
     mvn jetty:run
 
-Open a browser and go to <http://localhost:8080/spring-websocket-portfolio/index.html>
-
 **Note:** To deploy to a Jetty installation, add this to Jetty's `start.ini`:
 
     OPTIONS=plus
