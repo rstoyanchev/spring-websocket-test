@@ -1,37 +1,23 @@
 
 ## Overview
 
-Samples demonstrating Spring WebSocket and SockJS support, currently in development for Spring Framework 4.0.
+Demonstrates Spring WebSocket and SockJS support in Spring Framework 4.0, currently in development.
+
+**NOTE:** You'll most likely also want to check out the [Stock Portfolio](https://github.com/rstoyanchev/spring-websocket-portfolio) sample, which demonstrates the use of a higher-level messsaging protocol over WebSocket.
 
 ### Tomcat
 
-Tomcat provides early JSR-356 support (WebSocket API for Java). You'll need to build the latest Tomcat source from trunk, which is relatively simple.
-
-Check out Tomcat trunk:
-
-    mkdir tomcat
-    cd tomcat
-    svn co http://svn.apache.org/repos/asf/tomcat/trunk/
-    cd trunk
-
-Create `build.properties` in the trunk directory with similar content:
-
-    # ----- Default Base Path for Dependent Packages -----
-    # Replace this path with the path where dependencies binaries should be downloaded
-    base.path=~/dev/sources/apache/tomcat/download
-
-Run the ant build:
-
-    ant clean
-    ant
-
-A usable Tomcat installation can be found in `output/build`
+At present Tomcat 8 is [available as snapshots](https://repository.apache.org/content/repositories/snapshots/org/apache/tomcat/tomcat/8.0-SNAPSHOT/) (alpha release is forthcoming).
 
 ### Jetty 9
 
-The latest Jetty (currently 9.0.3.v20130506) does not yet support JSR-356. However, it does provide a native WebSocket API that can be used istead.
+The easiest way to run on Jetty 9.0.4:
 
-If using Java-based Servlet configuration instead of web.xml, add the following options to Jetty's start.ini:
+    mvn jetty:run
+
+Open a browser and go to <http://localhost:8080/spring-websocket-portfolio/index.html>
+
+**Note:** To deploy to a Jetty installation, add this to Jetty's `start.ini`:
 
     OPTIONS=plus
     etc/jetty-plus.xml
@@ -42,16 +28,16 @@ If using Java-based Servlet configuration instead of web.xml, add the following 
 
 Glassfish 4 provides JSR-356 support.
 
-Download a [Glassfish 4 build](http://dlc.sun.com.edgesuite.net/glassfish/4.0/) (e.g. glassfish-4.0-b84.zip from the promoted builds)
-
-Unzip the downloaded file.
+Download Glassfish 4 and unzip the downloaded distribution.
 
 Start the server:
 
     cd <unzip_dir>/glassfish4
     bin/asadmin start-domain
 
-Deploy the WAR file and watch the logs:
+Deploy the WAR file using the script in this directory.
+
+Watch the logs:
 
     cd <unzip_dir>/glassfish4
     less `glassfish/domains/domain1/logs/server.log`
