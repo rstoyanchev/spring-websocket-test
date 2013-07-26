@@ -3,7 +3,7 @@
 
 Demonstrates Spring WebSocket and SockJS support in Spring Framework 4.0, currently in development.
 
-This branch contains examples of using JSR-356 `Endpoint` and `@ServerEndpoint`. The `master` branch contains examples using Spring's `WebSocketHandler` including with SockJS fallback options. 
+**IMPORTANT:** This branch contains examples of using JSR-356 `Endpoint` and `@ServerEndpoint`. The `master` branch contains examples using Spring's `WebSocketHandler` including with SockJS fallback options. 
 
 **NOTE:** You'll most likely also want to check out the [Stock Portfolio](https://github.com/rstoyanchev/spring-websocket-portfolio) sample, which demonstrates the use of a higher-level messsaging protocol over WebSocket.
 
