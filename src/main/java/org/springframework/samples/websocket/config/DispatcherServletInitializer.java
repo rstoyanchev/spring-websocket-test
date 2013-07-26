@@ -16,41 +16,21 @@
 
 package org.springframework.samples.websocket.config;
 
-import javax.servlet.ServletRegistration.Dynamic;
+import javax.servlet.ServletContext;
+import javax.servlet.ServletException;
 
-import org.springframework.util.ClassUtils;
-import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
+import org.springframework.web.WebApplicationInitializer;
+import org.springframework.web.context.ContextLoaderListener;
+import org.springframework.web.context.support.AnnotationConfigWebApplicationContext;
 
-public class DispatcherServletInitializer extends AbstractAnnotationConfigDispatcherServletInitializer {
+public class DispatcherServletInitializer implements WebApplicationInitializer {
 
-	private static final boolean standardWebSocketPresent = ClassUtils.isPresent(
-			"javax.websocket.Endpoint", DispatcherServletInitializer.class.getClassLoader());
-
-
-	@Override
-	protected Class<?>[] getRootConfigClasses() {
-		if (standardWebSocketPresent) {
-			return new Class<?>[] { RootConfig.class, EndpointConfig.class };
-		}
-		else {
-			logger.debug("Standard Java for WebSocket not present, JSR-356 endpoints will not be loaded");
-			return new Class<?>[] { RootConfig.class };
-		}
-	}
 
 	@Override
-	protected Class<?>[] getServletConfigClasses() {
-		return new Class<?>[] { WebConfig.class };
-	}
-
-	@Override
-	protected String[] getServletMappings() {
-		return new String[] { "/" };
-	}
-
-	@Override
-	protected void customizeRegistration(Dynamic registration) {
-		registration.setInitParameter("dispatchOptionsRequest", "true");
+	public void onStartup(ServletContext servletContext) throws ServletException {
+		AnnotationConfigWebApplicationContext cxt = new AnnotationConfigWebApplicationContext();
+		cxt.register(EndpointConfig.class);
+		servletContext.addListener(new ContextLoaderListener(cxt));
 	}
 
 }

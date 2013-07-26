@@ -7,8 +7,7 @@
 	<version>1.0.0-SNAPSHOT</version>
 
 	<properties>
-		<org.springframework-version>4.0.0.M2</org.springframework-version>
-		<tomcat-version>8.0-SNAPSHOT</tomcat-version>
+		<org.springframework-version>4.0.0.BUILD-SNAPSHOT</org.springframework-version>
 	</properties>
 
 	<dependencies>
@@ -16,21 +15,10 @@
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-context</artifactId>
 			<version>${org.springframework-version}</version>
-			<exclusions>
-				<exclusion>
-					<groupId>commons-logging</groupId>
-					<artifactId>commons-logging</artifactId>
-				</exclusion>
-			</exclusions>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-web</artifactId>
-			<version>${org.springframework-version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-webmvc</artifactId>
 			<version>${org.springframework-version}</version>
 		</dependency>
 		<dependency>
@@ -49,14 +37,6 @@
 			<artifactId>javax.servlet-api</artifactId>
 			<version>3.1.0</version>
 			<scope>provided</scope>
-		</dependency>
-
-		<!-- For SockJS -->
-		<!-- http://jira.codehaus.org/browse/JACKSON-884 -->
-		<dependency>
-			<groupId>com.fasterxml.jackson.core</groupId>
-			<artifactId>jackson-databind</artifactId>
-			<version>2.2.1</version>
 		</dependency>
 
 		<dependency>
@@ -96,38 +76,18 @@
 		</dependency>
 
 		<dependency>
-			<groupId>junit</groupId>
-			<artifactId>junit</artifactId>
-			<version>4.8.2</version>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-test</artifactId>
-			<version>${org.springframework-version}</version>
-			<scope>test</scope>
-		</dependency>
-		
-		<dependency>
-			<groupId>org.eclipse.jetty.websocket</groupId>
-			<artifactId>websocket-client</artifactId>
-			<version>9.0.4.v20130625</version>
-			<scope>test</scope>
-		</dependency>
-		
-		<dependency>
 			<groupId>org.apache.tomcat</groupId>
 			<artifactId>tomcat-websocket</artifactId>
-			<version>${tomcat-version}</version>
+			<version>8.0-SNAPSHOT</version>
 			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.tomcat</groupId>
 			<artifactId>tomcat-coyote</artifactId>
-			<version>${tomcat-version}</version>
+			<version>8.0-SNAPSHOT</version>
 			<scope>provided</scope>
 		</dependency>
-		
+
 	</dependencies>
 
 	<repositories>
@@ -154,13 +114,6 @@
 			<url>https://maven.java.net/content/repositories/releases</url>
 		</repository>
 	</repositories>
-
-	<pluginRepositories>
-		<pluginRepository>
-			<id>apache.snapshots</id>
-			<url>http://repository.apache.org/content/groups/snapshots-group/</url>
-		</pluginRepository>
-	</pluginRepositories>	
 
 	<build>
 		<finalName>${project.artifactId}</finalName>
@@ -198,16 +151,6 @@
 					<downloadSources>true</downloadSources>
 					<downloadJavadocs>false</downloadJavadocs>
 					<wtpversion>2.0</wtpversion>
-				</configuration>
-			</plugin>
-			<plugin>
-				<groupId>org.eclipse.jetty</groupId>
-				<artifactId>jetty-maven-plugin</artifactId>
-				<version>9.0.4.v20130625</version>
-				<configuration>
-					<webApp>
-						<contextPath>/spring-websocket-test</contextPath>
-					</webApp>
 				</configuration>
 			</plugin>
 		</plugins>

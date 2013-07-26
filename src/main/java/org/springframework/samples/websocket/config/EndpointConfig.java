@@ -15,18 +15,16 @@
  */
 package org.springframework.samples.websocket.config;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.samples.websocket.echo.DefaultEchoService;
 import org.springframework.samples.websocket.echo.EchoEndpoint;
+import org.springframework.samples.websocket.echo.EchoService;
 import org.springframework.web.socket.server.endpoint.ServerEndpointExporter;
 import org.springframework.web.socket.server.endpoint.ServerEndpointRegistration;
 
 @Configuration
 public class EndpointConfig {
-
-	@Autowired
-	private RootConfig rootConfig;
 
 	@Bean
 	public ServerEndpointExporter endpointExporter() {
@@ -34,13 +32,22 @@ public class EndpointConfig {
 	}
 
 	@Bean
-	public ServerEndpointRegistration echoEndpoint() {
-		return new ServerEndpointRegistration("/echoEndpoint", EchoEndpoint.class);
+	public ServerEndpointRegistration echo() {
+		return new ServerEndpointRegistration("/echo", EchoEndpoint.class);
 	}
 
 	@Bean
-	public ServerEndpointRegistration echoEndpointSingleton() {
-		return new ServerEndpointRegistration("/echoEndpointSingleton", new EchoEndpoint(this.rootConfig.echoService()));
+	public ServerEndpointRegistration echoSingleton() {
+		return new ServerEndpointRegistration("/echoSingleton", new EchoEndpoint(echoService()));
 	}
 
+//	@Bean
+//	public EchoAnnotatedEndpoint echoAnnotatedSingleton() {
+//		return new EchoAnnotatedEndpoint(echoService());
+//	}
+
+	@Bean
+	public EchoService echoService() {
+		return new DefaultEchoService("Did you say \"%s\"?");
+	}
 }

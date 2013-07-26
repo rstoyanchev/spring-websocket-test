@@ -29,7 +29,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.socket.server.endpoint.SpringConfigurator;
 
-@ServerEndpoint(value = "/echoAnnotatedEndpoint", configurator = SpringConfigurator.class)
+@ServerEndpoint(value = "/echoAnnotated", configurator = SpringConfigurator.class)
 public class EchoAnnotatedEndpoint {
 
 	private static Logger logger = LoggerFactory.getLogger(EchoAnnotatedEndpoint.class);

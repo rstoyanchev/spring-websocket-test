@@ -29,12 +29,13 @@ import org.springframework.web.socket.client.endpoint.EndpointConnectionManager;
 
 public class Jsr356ClientApp {
 
-	private static final String WS_URI = "ws://localhost:8080/spring-websocket-test/echoWebSocket";
+	private static final String WS_URI = "ws://localhost:8080/spring-websocket-test/echo";
 
 
 	public static void main(String[] args) throws IOException {
 		try{
 			AnnotationConfigApplicationContext cxt = new AnnotationConfigApplicationContext(ClientConfig.class);
+			System.out.println("\n\n\nPress any key when ready to exit\n\n\n");
 			System.in.read();
 			cxt.close();
 		}
