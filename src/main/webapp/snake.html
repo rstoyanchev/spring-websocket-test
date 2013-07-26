@@ -51,7 +51,8 @@
     </style>
 </head>
 <body>
-    <noscript><h2 style="color: #ff0000">Seems your browser doesn't support Javascript! Websockets rely on Javascript being enabled. Please enable
+    <noscript><h2 style="color: #ff0000">Seems your browser doesn't support Javascript!
+    Websockets rely on Javascript being enabled. Please enable
     Javascript and reload this page!</h2></noscript>
     
     <div style="float: left">
@@ -60,6 +61,9 @@
     <div id="console-container">
         <div id="console"></div>
     </div>
+    
+    <script src="http://cdn.sockjs.org/sockjs-0.3.min.js"></script>
+    
     <script type="text/javascript">
 
         var Game = {};
@@ -110,11 +114,7 @@
                     }
                 }
             }, false);
-            if (window.location.protocol == 'http:') {
-                Game.connect('ws://' + window.location.host + '/spring-websocket-test/snakeWebSocketHandler');
-            } else {
-                Game.connect('wss://' + window.location.host + '/spring-websocket-test/snakeWebSocketHandler');
-            }
+            Game.connect();
         };
 
         Game.setDirection  = function(direction) {
@@ -185,26 +185,20 @@
             };
         })();
 
-        Game.connect = (function(host) {
-            if ('WebSocket' in window) {
-                Game.socket = new WebSocket(host);
-            } else if ('MozWebSocket' in window) {
-                Game.socket = new MozWebSocket(host);
-            } else {
-                Console.log('Error: WebSocket is not supported by this browser.');
-                return;
-            }
+        Game.connect = (function() {
+
+            Game.socket = new SockJS('/spring-websocket-test/sockjs/snake');
 
             Game.socket.onopen = function () {
-                // Socket open.. start the game loop.
-                Console.log('Info: WebSocket connection opened.');
-                Console.log('Info: Press an arrow key to begin.');
-                Game.startGameLoop();
-                setInterval(function() {
-                    // Prevent server read timeout.
-                    Game.socket.send('ping');
-                }, 5000);
-            };
+                  // Socket open.. start the game loop.
+                  Console.log('Info: WebSocket connection opened.');
+                  Console.log('Info: Press an arrow key to begin.');
+                  Game.startGameLoop();
+                  setInterval(function() {
+                      // Prevent server read timeout.
+                      Game.socket.send('ping');
+                  }, 5000);
+              };
 
             Game.socket.onclose = function () {
                 Console.log('Info: WebSocket closed.');
@@ -236,7 +230,8 @@
                         Console.log('Info: Head shot!');
                         break;
                 }
-            };
+              };
+
         });
 
         var Console = {};

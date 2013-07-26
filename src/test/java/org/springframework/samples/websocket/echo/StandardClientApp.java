@@ -17,24 +17,24 @@ package org.springframework.samples.websocket.echo;
 
 import java.io.IOException;
 
-import javax.websocket.Endpoint;
-
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.samples.websocket.client.GreetingService;
-import org.springframework.samples.websocket.client.SimpleClientEndpoint;
+import org.springframework.samples.websocket.client.SimpleClientWebSocketHandler;
 import org.springframework.samples.websocket.client.SimpleGreetingService;
-import org.springframework.web.socket.client.endpoint.EndpointConnectionManager;
+import org.springframework.web.socket.client.WebSocketConnectionManager;
+import org.springframework.web.socket.client.endpoint.StandardWebSocketClient;
 
-public class Jsr356ClientApp {
+public class StandardClientApp {
 
-	private static final String WS_URI = "ws://localhost:8080/spring-websocket-test/echoWebSocket";
+	private static final String WS_URI = "ws://localhost:8080/spring-websocket-test/echo";
 
 
 	public static void main(String[] args) throws IOException {
 		try{
 			AnnotationConfigApplicationContext cxt = new AnnotationConfigApplicationContext(ClientConfig.class);
+			System.out.println("\n\n\nWhen ready, press any key to exit\n\n\n");
 			System.in.read();
 			cxt.close();
 		}
@@ -50,13 +50,22 @@ public class Jsr356ClientApp {
 	static class ClientConfig {
 
 		@Bean
-		public EndpointConnectionManager wsConnectionManager() {
+		public WebSocketConnectionManager wsConnectionManager() {
 
-			Endpoint endpoint = new SimpleClientEndpoint(greetingService());
-			EndpointConnectionManager manager = new EndpointConnectionManager(endpoint, WS_URI);
+			WebSocketConnectionManager manager = new WebSocketConnectionManager(client(), handler(), WS_URI);
 			manager.setAutoStartup(true);
 
 			return manager;
+		}
+
+		@Bean
+		public StandardWebSocketClient client() {
+			return new StandardWebSocketClient();
+		}
+
+		@Bean
+		public SimpleClientWebSocketHandler handler() {
+			return new SimpleClientWebSocketHandler(greetingService());
 		}
 
 		@Bean

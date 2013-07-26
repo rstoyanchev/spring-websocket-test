@@ -14,15 +14,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.springframework.samples.websocket.snake.websockethandler;
+package org.springframework.samples.websocket.snake;
 
 import java.util.ArrayDeque;
 import java.util.Collection;
 import java.util.Deque;
 
-import org.springframework.samples.websocket.snake.Direction;
-import org.springframework.samples.websocket.snake.Location;
-import org.springframework.samples.websocket.snake.SnakeUtils;
 import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
 

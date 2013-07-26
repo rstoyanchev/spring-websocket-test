@@ -17,7 +17,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Apache Tomcat WebSocket Examples: Echo</title>
+    <title>WebSocket/SockJS Echo Sample (Adapted from Tomcat's echo sample)</title>
     <style type="text/css">
         #connect-container {
             float: left;
@@ -49,8 +49,13 @@
             margin: 0;
         }
     </style>
+
+    <script src="http://cdn.sockjs.org/sockjs-0.3.min.js"></script>
+
     <script type="text/javascript">
         var ws = null;
+        var url = null;
+        var transports = [];
 
         function setConnected(connected) {
             document.getElementById('connect').disabled = connected;
@@ -59,29 +64,25 @@
         }
 
         function connect() {
-            var target = document.getElementById('target').value;
-            if (target == '') {
-                alert('Please select server side connection implementation.');
+            if (!url) {
+                alert('Select whether to use W3C WebSocket or SockJS');
                 return;
             }
-            if ('WebSocket' in window) {
-                ws = new WebSocket(target);
-            } else if ('MozWebSocket' in window) {
-                ws = new MozWebSocket(target);
-            } else {
-                alert('WebSocket is not supported by this browser.');
-                return;
-            }
+
+            ws = (url.indexOf('sockjs') != -1) ? 
+                new SockJS(url, undefined, {protocols_whitelist: transports}) : new WebSocket(url);
+
             ws.onopen = function () {
                 setConnected(true);
-                log('Info: WebSocket connection opened.');
+                log('Info: connection opened.');
             };
             ws.onmessage = function (event) {
                 log('Received: ' + event.data);
             };
-            ws.onclose = function () {
+            ws.onclose = function (event) {
                 setConnected(false);
-                log('Info: WebSocket connection closed.');
+                log('Info: connection closed.');
+                log(event);
             };
         }
 
@@ -99,18 +100,29 @@
                 log('Sent: ' + message);
                 ws.send(message);
             } else {
-                alert('WebSocket connection not established, please connect.');
+                alert('connection not established, please connect.');
             }
         }
 
-        function updateTarget(target) {
-            if (window.location.protocol == 'http:') {
-                document.getElementById('target').value = 'ws://' + window.location.host + target;
-            } else {
-                document.getElementById('target').value = 'wss://' + window.location.host + target;
+        function updateUrl(urlPath) {
+            if (urlPath.indexOf('sockjs') != -1) {
+                url = urlPath;
+                document.getElementById('sockJsTransportSelect').style.visibility = 'visible';
+            }
+            else {
+              if (window.location.protocol == 'http:') {
+                  url = 'ws://' + window.location.host + urlPath;
+              } else {
+                  url = 'wss://' + window.location.host + urlPath;
+              }
+              document.getElementById('sockJsTransportSelect').style.visibility = 'hidden';
             }
         }
 
+        function updateTransport(transport) {
+          transports = (transport == 'all') ?  [] : [transport];
+        }
+        
         function log(message) {
             var console = document.getElementById('console');
             var p = document.createElement('p');
@@ -125,24 +137,27 @@
     </script>
 </head>
 <body>
-<noscript><h2 style="color: #ff0000">Seems your browser doesn't support Javascript! Websockets rely on Javascript being enabled. Please enable
+<noscript><h2 style="color: #ff0000">Seems your browser doesn't support Javascript! Websockets 
+    rely on Javascript being enabled. Please enable
     Javascript and reload this page!</h2></noscript>
 <div>
     <div id="connect-container">
-        <div>
-            <span>Connect to service implemented using:</span>
-            <br>
-            <input id="radio1" type="radio" name="group1" value="/spring-websocket-test/echoEndpoint"
-                   onclick="updateTarget(this.value);"> <label for="radio1">Endpoint sub-class</label>
-            <br>
-            <input id="radio2" type="radio" name="group1" value="/spring-websocket-test/echoAnnotatedEndpoint"
-                   onclick="updateTarget(this.value);"> <label for="radio2">@ServerEndpoint</label>
-            <br>
-            <input id="radio2" type="radio" name="group1" value="/spring-websocket-test/echoWebSocketHandler"
-                   onclick="updateTarget(this.value);"> <label for="radio2">WebSocketHandler</label>
-        </div>
-        <div>
-            <input id="target" type="text" size="40" style="width: 350px"/>
+        <input id="radio1" type="radio" name="group1" onclick="updateUrl('/spring-websocket-test/echo');">
+            <label for="radio1">W3C WebSocket</label>
+        <br>
+        <input id="radio2" type="radio" name="group1" onclick="updateUrl('/spring-websocket-test/sockjs/echo');">
+            <label for="radio2">SockJS</label>
+        <div id="sockJsTransportSelect" style="visibility:hidden;">
+            <span>SockJS transport:</span>
+            <select onchange="updateTransport(this.value)">
+              <option value="all">all</option>
+              <option value="websocket">websocket</option>
+              <option value="xhr-polling">xhr-polling</option>
+              <option value="jsonp-polling">jsonp-polling</option>
+              <option value="xhr-streaming">xhr-streaming</option>
+              <option value="iframe-eventsource">iframe-eventsource</option>
+              <option value="iframe-htmlfile">iframe-htmlfile</option>
+            </select>
         </div>
         <div>
             <button id="connect" onclick="connect();">Connect</button>

@@ -28,14 +28,18 @@ import org.springframework.web.socket.client.jetty.JettyWebSocketClient;
 
 public class JettyClientApp {
 
-	private static final String WS_URI = "ws://localhost:8080/spring-websocket-test/echoWebSocket";
+	private static final String WS_URI = "ws://localhost:8080/spring-websocket-test/echo";
 
 
 	public static void main(String[] args) throws IOException {
 		try{
 			AnnotationConfigApplicationContext cxt = new AnnotationConfigApplicationContext(ClientConfig.class);
+			System.out.println("\n\n\nWhen ready, press any key to exit\n\n\n");
 			System.in.read();
 			cxt.close();
+		}
+		catch (Throwable t) {
+			t.printStackTrace();
 		}
 		finally {
 			System.exit(0);

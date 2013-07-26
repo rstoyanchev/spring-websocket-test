@@ -14,15 +14,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.springframework.samples.websocket.snake.websockethandler;
+package org.springframework.samples.websocket.snake;
 
 import java.awt.Color;
 import java.util.Iterator;
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import org.springframework.samples.websocket.snake.Direction;
-import org.springframework.samples.websocket.snake.Location;
 import org.springframework.web.socket.CloseStatus;
 import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;

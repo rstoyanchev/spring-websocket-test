@@ -17,8 +17,6 @@ package org.springframework.samples.websocket.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.samples.websocket.client.GreetingService;
-import org.springframework.samples.websocket.client.SimpleGreetingService;
 import org.springframework.samples.websocket.echo.DefaultEchoService;
 import org.springframework.samples.websocket.echo.EchoService;
 
@@ -28,11 +26,6 @@ public class RootConfig {
 	@Bean
 	public EchoService echoService() {
 		return new DefaultEchoService("Did you say \"%s\"?");
-	}
-
-	@Bean
-	public GreetingService greetingService() {
-		return new SimpleGreetingService();
 	}
 
 }

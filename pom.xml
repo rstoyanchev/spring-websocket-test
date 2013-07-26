@@ -7,8 +7,7 @@
 	<version>1.0.0-SNAPSHOT</version>
 
 	<properties>
-		<org.springframework-version>4.0.0.M2</org.springframework-version>
-		<tomcat-version>8.0-SNAPSHOT</tomcat-version>
+		<org.springframework-version>4.0.0.BUILD-SNAPSHOT</org.springframework-version>
 	</properties>
 
 	<dependencies>
@@ -16,12 +15,6 @@
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-context</artifactId>
 			<version>${org.springframework-version}</version>
-			<exclusions>
-				<exclusion>
-					<groupId>commons-logging</groupId>
-					<artifactId>commons-logging</artifactId>
-				</exclusion>
-			</exclusions>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework</groupId>
@@ -37,12 +30,6 @@
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-websocket</artifactId>
 			<version>${org.springframework-version}</version>
-		</dependency>
-		<dependency>
-			<groupId>javax.websocket</groupId>
-			<artifactId>javax.websocket-api</artifactId>
-			<version>1.0</version>
-			<scope>provided</scope>
 		</dependency>
 		<dependency>
 			<groupId>javax.servlet</groupId>
@@ -96,37 +83,24 @@
 		</dependency>
 
 		<dependency>
-			<groupId>junit</groupId>
-			<artifactId>junit</artifactId>
-			<version>4.8.2</version>
+			<groupId>org.apache.tomcat</groupId>
+			<artifactId>tomcat-websocket</artifactId>
+			<version>8.0-SNAPSHOT</version>
 			<scope>test</scope>
 		</dependency>
 		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-test</artifactId>
-			<version>${org.springframework-version}</version>
-			<scope>test</scope>
+			<groupId>org.apache.tomcat</groupId>
+			<artifactId>tomcat-coyote</artifactId>
+			<version>8.0-SNAPSHOT</version>
+			<scope>provided</scope>
 		</dependency>
-		
 		<dependency>
 			<groupId>org.eclipse.jetty.websocket</groupId>
 			<artifactId>websocket-client</artifactId>
 			<version>9.0.4.v20130625</version>
 			<scope>test</scope>
 		</dependency>
-		
-		<dependency>
-			<groupId>org.apache.tomcat</groupId>
-			<artifactId>tomcat-websocket</artifactId>
-			<version>${tomcat-version}</version>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.apache.tomcat</groupId>
-			<artifactId>tomcat-coyote</artifactId>
-			<version>${tomcat-version}</version>
-			<scope>provided</scope>
-		</dependency>
+
 		
 	</dependencies>
 
@@ -155,13 +129,6 @@
 		</repository>
 	</repositories>
 
-	<pluginRepositories>
-		<pluginRepository>
-			<id>apache.snapshots</id>
-			<url>http://repository.apache.org/content/groups/snapshots-group/</url>
-		</pluginRepository>
-	</pluginRepositories>	
-
 	<build>
 		<finalName>${project.artifactId}</finalName>
 		<plugins>
@@ -170,8 +137,8 @@
 				<artifactId>maven-compiler-plugin</artifactId>
 				<version>2.3.2</version>
 				<configuration>
-					<source>1.6</source>
-					<target>1.6</target>
+					<source>1.7</source>
+					<target>1.7</target>
 				</configuration>
 			</plugin>
 			<plugin>
@@ -206,7 +173,7 @@
 				<version>9.0.4.v20130625</version>
 				<configuration>
 					<webApp>
-						<contextPath>/spring-websocket-test</contextPath>
+						<contextPath>/${project.artifactId}</contextPath>
 					</webApp>
 				</configuration>
 			</plugin>
