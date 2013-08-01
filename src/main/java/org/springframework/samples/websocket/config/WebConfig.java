@@ -14,8 +14,9 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 import org.springframework.web.servlet.handler.SimpleUrlHandlerMapping;
 import org.springframework.web.socket.WebSocketHandler;
 import org.springframework.web.socket.server.support.WebSocketHttpRequestHandler;
-import org.springframework.web.socket.sockjs.support.DefaultSockJsService;
-import org.springframework.web.socket.sockjs.support.SockJsHttpRequestHandler;
+import org.springframework.web.socket.sockjs.SockJsHttpRequestHandler;
+import org.springframework.web.socket.sockjs.SockJsService;
+import org.springframework.web.socket.sockjs.transport.handler.DefaultSockJsService;
 import org.springframework.web.socket.support.PerConnectionWebSocketHandler;
 
 @Configuration
@@ -25,8 +26,7 @@ public class WebConfig extends WebMvcConfigurerAdapter {
 	@Bean
 	public SimpleUrlHandlerMapping handlerMapping() {
 
-		DefaultSockJsService sockJsService = new DefaultSockJsService(sockJsTaskScheduler());
-		sockJsService.setSockJsClientLibraryUrl("https://cdn.sockjs.org/sockjs-0.3.4.min.js");
+		SockJsService sockJsService = new DefaultSockJsService(sockJsTaskScheduler());
 
 		Map<String, Object> urlMap = new HashMap<String, Object>();
 		urlMap.put("/echo", new WebSocketHttpRequestHandler(echoWebSocketHandler()));

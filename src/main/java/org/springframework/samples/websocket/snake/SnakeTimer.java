@@ -23,16 +23,15 @@ import java.util.Timer;
 import java.util.TimerTask;
 import java.util.concurrent.ConcurrentHashMap;
 
-import org.apache.juli.logging.Log;
-import org.apache.juli.logging.LogFactory;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 /**
  * Sets up the timer for the multi-player snake game WebSocket example.
  */
 public class SnakeTimer {
 
-    private static final Log log =
-            LogFactory.getLog(SnakeTimer.class);
+    private static final Log log = LogFactory.getLog(SnakeTimer.class);
 
     private static Timer gameTimer = null;
 
