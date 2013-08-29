@@ -2,6 +2,7 @@ package org.springframework.samples.websocket.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.samples.websocket.echo.DefaultEchoService;
 import org.springframework.samples.websocket.echo.EchoWebSocketHandler;
 import org.springframework.samples.websocket.snake.SnakeWebSocketHandler;
 import org.springframework.web.servlet.config.annotation.DefaultServletHandlerConfigurer;
@@ -30,12 +31,17 @@ public class WebConfig extends WebMvcConfigurerAdapter implements WebSocketConfi
 
 	@Bean
 	public WebSocketHandler echoWebSocketHandler() {
-		return new PerConnectionWebSocketHandler(EchoWebSocketHandler.class);
+		return new EchoWebSocketHandler(echoService());
 	}
 
 	@Bean
 	public WebSocketHandler snakeWebSocketHandler() {
-		return new SnakeWebSocketHandler();
+		return new PerConnectionWebSocketHandler(SnakeWebSocketHandler.class);
+	}
+
+	@Bean
+	public DefaultEchoService echoService() {
+		return new DefaultEchoService("Did you say \"%s\"?");
 	}
 
 	// Allow serving HTML files through the default Servlet
