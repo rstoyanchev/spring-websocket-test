@@ -24,7 +24,7 @@ import org.springframework.samples.websocket.client.GreetingService;
 import org.springframework.samples.websocket.client.SimpleClientWebSocketHandler;
 import org.springframework.samples.websocket.client.SimpleGreetingService;
 import org.springframework.web.socket.client.WebSocketConnectionManager;
-import org.springframework.web.socket.client.endpoint.StandardWebSocketClient;
+import org.springframework.web.socket.client.standard.StandardWebSocketClient;
 
 public class StandardClientApp {
 

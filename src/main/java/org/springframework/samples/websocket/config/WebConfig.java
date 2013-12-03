@@ -9,10 +9,10 @@ import org.springframework.web.servlet.config.annotation.DefaultServletHandlerCo
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 import org.springframework.web.socket.WebSocketHandler;
-import org.springframework.web.socket.server.config.EnableWebSocket;
-import org.springframework.web.socket.server.config.WebSocketConfigurer;
-import org.springframework.web.socket.server.config.WebSocketHandlerRegistry;
-import org.springframework.web.socket.support.PerConnectionWebSocketHandler;
+import org.springframework.web.socket.config.annotation.EnableWebSocket;
+import org.springframework.web.socket.config.annotation.WebSocketConfigurer;
+import org.springframework.web.socket.config.annotation.WebSocketHandlerRegistry;
+import org.springframework.web.socket.handler.PerConnectionWebSocketHandler;
 
 @Configuration
 @EnableWebMvc
