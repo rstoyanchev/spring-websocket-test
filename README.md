@@ -1,6 +1,6 @@
 ## Overview
 
-Demonstrates Spring WebSocket and SockJS support in Spring Framework 4.0, currently in development.
+Demonstrates Spring WebSocket and SockJS support in Spring Framework 4.0.
 
 **IMPORTANT:** The `master` branch contains examples using Spring's `WebSocketHandler` including with SockJS fallback options. The `endpoint` branch contains examples of using JSR-356 `Endpoint` and `@ServerEndpoint`.
 
@@ -16,7 +16,7 @@ Open a browser and go to <http://localhost:8080/spring-websocket-test/index.html
 
 ### Jetty 9
 
-The easiest way to run on Jetty 9.0.4:
+The easiest way to run on Jetty 9.1.0:
 
     mvn jetty:run
 
