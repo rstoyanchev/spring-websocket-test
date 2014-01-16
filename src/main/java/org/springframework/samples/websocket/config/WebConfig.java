@@ -22,10 +22,12 @@ public class WebConfig extends WebMvcConfigurerAdapter implements WebSocketConfi
 	@Override
 	public void registerWebSocketHandlers(WebSocketHandlerRegistry registry) {
 
-		registry.addHandler(echoWebSocketHandler(), "/echo");
+		registry.addHandler(echoWebSocketHandler(), "/echo", "/echo-issue4");
 		registry.addHandler(snakeWebSocketHandler(), "/snake");
 
 		registry.addHandler(echoWebSocketHandler(), "/sockjs/echo").withSockJS();
+		registry.addHandler(echoWebSocketHandler(), "/sockjs/echo-issue4").withSockJS().setHttpMessageCacheSize(20000);
+
 		registry.addHandler(snakeWebSocketHandler(), "/sockjs/snake").withSockJS();
 	}
 
