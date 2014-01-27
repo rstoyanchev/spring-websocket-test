@@ -15,6 +15,7 @@
  */
 package org.springframework.samples.websocket.echo;
 
+
 public class DefaultEchoService implements EchoService {
 
 	private final String echoFormat;

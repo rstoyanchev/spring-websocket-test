@@ -27,30 +27,32 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
+
 public class EchoEndpoint extends Endpoint {
 
 	private static Logger logger = LoggerFactory.getLogger(EchoEndpoint.class);
 
 	private final EchoService echoService;
 
+
 	@Autowired
 	public EchoEndpoint(EchoService echoService) {
 		this.echoService = echoService;
 	}
 
+
 	@Override
 	public void onOpen(final Session session, EndpointConfig endpointConfig) {
-
-		logger.debug("Opened new session in instance " + this);
-
+		logger.debug("New session started in " + this);
 		session.addMessageHandler(new MessageHandler.Whole<String>() {
 			@Override
 			public void onMessage(String message) {
 				try {
 					logger.debug("Echoing message: " + message);
 					session.getBasicRemote().sendText(echoService.getMessage(message));
-				} catch (IOException e) {
-					e.printStackTrace();
+				}
+				catch (IOException e) {
+					logger.error("Failed to send message", e);
 				}
 			}
 		});

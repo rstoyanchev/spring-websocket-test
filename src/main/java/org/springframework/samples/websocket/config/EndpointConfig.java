@@ -18,18 +18,15 @@ package org.springframework.samples.websocket.config;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.samples.websocket.echo.DefaultEchoService;
+import org.springframework.samples.websocket.echo.EchoAnnotatedEndpoint;
 import org.springframework.samples.websocket.echo.EchoEndpoint;
 import org.springframework.samples.websocket.echo.EchoService;
-import org.springframework.web.socket.server.endpoint.ServerEndpointExporter;
-import org.springframework.web.socket.server.endpoint.ServerEndpointRegistration;
+import org.springframework.web.socket.server.standard.ServerEndpointExporter;
+import org.springframework.web.socket.server.standard.ServerEndpointRegistration;
+
 
 @Configuration
 public class EndpointConfig {
-
-	@Bean
-	public ServerEndpointExporter endpointExporter() {
-		return new ServerEndpointExporter();
-	}
 
 	@Bean
 	public ServerEndpointRegistration echo() {
@@ -42,12 +39,18 @@ public class EndpointConfig {
 	}
 
 //	@Bean
-//	public EchoAnnotatedEndpoint echoAnnotatedSingleton() {
-//		return new EchoAnnotatedEndpoint(echoService());
-//	}
+	public EchoAnnotatedEndpoint echoAnnotatedSingleton() {
+		return new EchoAnnotatedEndpoint(echoService());
+	}
 
 	@Bean
 	public EchoService echoService() {
 		return new DefaultEchoService("Did you say \"%s\"?");
 	}
+
+	@Bean
+	public ServerEndpointExporter endpointExporter() {
+		return new ServerEndpointExporter();
+	}
+
 }

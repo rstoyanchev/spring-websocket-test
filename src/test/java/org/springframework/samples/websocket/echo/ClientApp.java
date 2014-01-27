@@ -17,52 +17,26 @@ package org.springframework.samples.websocket.echo;
 
 import java.io.IOException;
 
-import javax.websocket.Endpoint;
-
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.samples.websocket.client.GreetingService;
-import org.springframework.samples.websocket.client.SimpleClientEndpoint;
-import org.springframework.samples.websocket.client.SimpleGreetingService;
-import org.springframework.web.socket.client.endpoint.EndpointConnectionManager;
 
-public class Jsr356ClientApp {
-
-	private static final String WS_URI = "ws://localhost:8080/spring-websocket-test/echo";
-
+public class ClientApp {
 
 	public static void main(String[] args) throws IOException {
-		try{
+
+		try {
 			AnnotationConfigApplicationContext cxt = new AnnotationConfigApplicationContext(ClientConfig.class);
+
 			System.out.println("\n\n\nPress any key when ready to exit\n\n\n");
 			System.in.read();
+
 			cxt.close();
+
 		}
 		catch (Throwable t) {
 			t.printStackTrace();
 		}
 		finally {
 			System.exit(0);
-		}
-	}
-
-	@Configuration
-	static class ClientConfig {
-
-		@Bean
-		public EndpointConnectionManager wsConnectionManager() {
-
-			Endpoint endpoint = new SimpleClientEndpoint(greetingService());
-			EndpointConnectionManager manager = new EndpointConnectionManager(endpoint, WS_URI);
-			manager.setAutoStartup(true);
-
-			return manager;
-		}
-
-		@Bean
-		public GreetingService greetingService() {
-			return new SimpleGreetingService();
 		}
 	}
 

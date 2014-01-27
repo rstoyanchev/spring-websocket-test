@@ -23,14 +23,14 @@ import org.springframework.web.WebApplicationInitializer;
 import org.springframework.web.context.ContextLoaderListener;
 import org.springframework.web.context.support.AnnotationConfigWebApplicationContext;
 
-public class DispatcherServletInitializer implements WebApplicationInitializer {
 
+public class DispatcherServletInitializer implements WebApplicationInitializer {
 
 	@Override
 	public void onStartup(ServletContext servletContext) throws ServletException {
-		AnnotationConfigWebApplicationContext cxt = new AnnotationConfigWebApplicationContext();
-		cxt.register(EndpointConfig.class);
-		servletContext.addListener(new ContextLoaderListener(cxt));
+		AnnotationConfigWebApplicationContext wac = new AnnotationConfigWebApplicationContext();
+		wac.register(EndpointConfig.class);
+		servletContext.addListener(new ContextLoaderListener(wac));
 	}
 
 }

@@ -27,7 +27,8 @@ import javax.websocket.server.ServerEndpoint;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.socket.server.endpoint.SpringConfigurator;
+import org.springframework.web.socket.server.standard.SpringConfigurator;
+
 
 @ServerEndpoint(value = "/echoAnnotated", configurator = SpringConfigurator.class)
 public class EchoAnnotatedEndpoint {
@@ -36,28 +37,32 @@ public class EchoAnnotatedEndpoint {
 
 	private final EchoService echoService;
 
+
 	@Autowired
 	public EchoAnnotatedEndpoint(EchoService echoService) {
 		this.echoService = echoService;
 	}
 
+
 	@OnOpen
 	public void newSession() {
-		logger.debug("Opened new session in instance " + this);
+		logger.debug("New session started in " + this);
 	}
 
 	@OnMessage
 	public void echoTextMessage(Session session, String msg, boolean last) {
 		try {
+			logger.debug("Echoing: " + msg);
 			session.getBasicRemote().sendText(this.echoService.getMessage(msg), last);
-		} catch (IOException e) {
-			e.printStackTrace();
+		}
+		catch (IOException e) {
+			logger.error("Failed to send message", e);
 		}
 	}
 
 	@OnError
 	public void handleError(Throwable t) {
-		logger.error("handleError", t);
+		logger.error("Error reported by the container", t);
 	}
 
 }
