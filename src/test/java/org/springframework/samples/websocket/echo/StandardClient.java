@@ -24,9 +24,9 @@ import org.springframework.samples.websocket.client.GreetingService;
 import org.springframework.samples.websocket.client.SimpleClientWebSocketHandler;
 import org.springframework.samples.websocket.client.SimpleGreetingService;
 import org.springframework.web.socket.client.WebSocketConnectionManager;
-import org.springframework.web.socket.client.jetty.JettyWebSocketClient;
+import org.springframework.web.socket.client.standard.StandardWebSocketClient;
 
-public class JettyClientApp {
+public class StandardClient {
 
 	private static final String WS_URI = "ws://localhost:8080/spring-websocket-test/echo";
 
@@ -50,17 +50,15 @@ public class JettyClientApp {
 	static class ClientConfig {
 
 		@Bean
-		public WebSocketConnectionManager wsConnectionManager() {
-
+		public WebSocketConnectionManager connectionManager() {
 			WebSocketConnectionManager manager = new WebSocketConnectionManager(client(), handler(), WS_URI);
 			manager.setAutoStartup(true);
-
 			return manager;
 		}
 
 		@Bean
-		public JettyWebSocketClient client() {
-			return new JettyWebSocketClient();
+		public StandardWebSocketClient client() {
+			return new StandardWebSocketClient();
 		}
 
 		@Bean

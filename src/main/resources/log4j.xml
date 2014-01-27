@@ -13,7 +13,7 @@
 	<logger name="org.springframework.samples">
 		<level value="trace" />
 	</logger>
-	
+
 	<logger name="org.springframework.web">
 		<level value="debug" />
 	</logger>
