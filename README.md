@@ -49,4 +49,13 @@ Watch the logs:
     cd <unzip_dir>/glassfish4
     less `glassfish/domains/domain1/logs/server.log`
 
+### WildFly/Undertow
+
+Support available startin with Spring Framework 4.0.1. Requires WildFly 8.0.0.Final.
+
+Unzip the WildFly server.
+
+Set `WILDFLY_HOME` as an environment variable and use [deployWildFly.sh](https://github.com/rstoyanchev/spring-websocket-test/blob/master/deployWildFly.sh) in this directory.
+
+Open a browser and go to <http://localhost:8080/spring-websocket-portfolio/index.html>
 
