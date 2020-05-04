@@ -1,18 +1,18 @@
 ## Overview
 
-Demonstrates Spring WebSocket and SockJS support.
+Demonstrates Spring WebSocket and SockJS support in the Spring Framework.
 
 **IMPORTANT:** The `master` branch contains examples using Spring's `WebSocketHandler` including with SockJS fallback options. The `endpoint` branch contains examples of using JSR-356 `Endpoint` and `@ServerEndpoint`.
 
 **NOTE:** Also check out the [Stock Portfolio](https://github.com/rstoyanchev/spring-websocket-portfolio) sample that demonstrates the use of a higher-level messaging over WebSocket.
 
-### Tomcat 8.5+
+### Tomcat
 
-Set `TOMCAT8_HOME` as an environment variable and use [deployTomcat8.sh](https://github.com/rstoyanchev/spring-websocket-test/blob/master/deployTomcat8.sh) and [shutdownTomcat8.sh](https://github.com/rstoyanchev/spring-websocket-test/blob/master/shutdownTomcat8.sh) in this directory.
+Set `TOMCAT_HOME` as an environment variable and use [deployTomcat.sh](https://github.com/rstoyanchev/spring-websocket-test/blob/master/deployTomcat.sh) and [shutdownTomcat.sh](https://github.com/rstoyanchev/spring-websocket-test/blob/master/shutdownTomcat.sh) in this directory.
 
 Open a browser and go to <http://localhost:8080/spring-websocket-test/index.html>
 
-### Jetty 9.4+
+### Jetty
 
 The easiest way to run on Jetty is with `mvn jetty:run`.
 
