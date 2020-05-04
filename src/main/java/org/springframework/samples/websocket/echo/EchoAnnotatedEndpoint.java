@@ -24,8 +24,9 @@ import javax.websocket.OnOpen;
 import javax.websocket.Session;
 import javax.websocket.server.ServerEndpoint;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.socket.server.standard.SpringConfigurator;
 
@@ -33,7 +34,7 @@ import org.springframework.web.socket.server.standard.SpringConfigurator;
 @ServerEndpoint(value = "/echoAnnotated", configurator = SpringConfigurator.class)
 public class EchoAnnotatedEndpoint {
 
-	private static Logger logger = LoggerFactory.getLogger(EchoAnnotatedEndpoint.class);
+	private static Logger logger = LogManager.getLogger(EchoAnnotatedEndpoint.class);
 
 	private final EchoService echoService;
 

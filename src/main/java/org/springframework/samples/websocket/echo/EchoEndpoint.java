@@ -23,14 +23,15 @@ import javax.websocket.EndpointConfig;
 import javax.websocket.MessageHandler;
 import javax.websocket.Session;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import org.springframework.beans.factory.annotation.Autowired;
 
 
 public class EchoEndpoint extends Endpoint {
 
-	private static Logger logger = LoggerFactory.getLogger(EchoEndpoint.class);
+	private static Logger logger = LogManager.getLogger(EchoEndpoint.class);
 
 	private final EchoService echoService;
 
