@@ -50,7 +50,7 @@
         }
     </style>
 
-    <script src="http://cdn.sockjs.org/sockjs-0.3.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
 
     <script type="text/javascript">
         var ws = null;
@@ -70,7 +70,7 @@
             }
 
             ws = (url.indexOf('sockjs') != -1) ? 
-                new SockJS(url, undefined, {protocols_whitelist: transports}) : new WebSocket(url);
+                new SockJS(url, undefined, {transports: transports}) : new WebSocket(url);
 
             ws.onopen = function () {
                 setConnected(true);
