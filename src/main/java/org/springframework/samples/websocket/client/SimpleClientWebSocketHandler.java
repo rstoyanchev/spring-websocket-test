@@ -15,8 +15,9 @@
  */
 package org.springframework.samples.websocket.client;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
@@ -24,7 +25,7 @@ import org.springframework.web.socket.handler.TextWebSocketHandler;
 
 public class SimpleClientWebSocketHandler extends TextWebSocketHandler {
 
-	protected Log logger = LogFactory.getLog(SimpleClientWebSocketHandler.class);
+	protected Logger logger = LogManager.getLogger(SimpleClientWebSocketHandler.class);
 
 	private final GreetingService greetingService;
 
