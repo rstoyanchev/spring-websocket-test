@@ -72,3 +72,5 @@ Watch the logs:
     cd <unzip_dir>/glassfish4
     less `glassfish/domains/domain1/logs/server.log`
 
+### What is websocket?
+Websockets allow us to have two way conversation between server and client. There are many websocket libraries such as Socket.io . These are mainly used when there is a need to make a chat functionality for the app.
