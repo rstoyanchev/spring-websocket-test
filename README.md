@@ -1,6 +1,6 @@
 ## Overview
 
-Demonstrates Spring WebSocket and SockJS support in the Spring Framework.
+Demonstrates Spring WebSocket and SockJS support in the Spring Framework. For a longer overview please see the [Spring Framework reference](https://docs.spring.io/spring-framework/docs/current/spring-framework-reference/web.html#websocket).
 
 **IMPORTANT:** The `master` branch contains examples using Spring's `WebSocketHandler` including with SockJS fallback options. The `endpoint` branch contains examples of using JSR-356 `Endpoint` and `@ServerEndpoint`.
 
