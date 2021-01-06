@@ -1,5 +1,5 @@
 /*
- * Copyright 2002-2013 the original author or authors.
+ * Copyright 2002-2021 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,8 +15,6 @@
  */
 package org.springframework.samples.websocket.echo;
 
-import java.io.IOException;
-
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -31,7 +29,7 @@ public class JettyClient {
 	private static final String WS_URI = "ws://localhost:8080/spring-websocket-test/echo";
 
 
-	public static void main(String[] args) throws IOException {
+	public static void main(String[] args) {
 		try{
 			AnnotationConfigApplicationContext cxt = new AnnotationConfigApplicationContext(ClientConfig.class);
 			System.out.println("\n\n\nWhen ready, press any key to exit\n\n\n");
