@@ -1,5 +1,5 @@
 /*
- * Copyright 2002-2013 the original author or authors.
+ * Copyright 2002-2021 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -30,8 +30,8 @@ public class ClientConfig {
 	private static final String WS_URI = "ws://localhost:8080/spring-websocket-test/echo";
 
 	@Bean
-	public EndpointConnectionManager connectionManager() {
-		Endpoint endpoint = new SimpleClientEndpoint(greetingService());
+	public EndpointConnectionManager connectionManager(GreetingService greetingService) {
+		Endpoint endpoint = new SimpleClientEndpoint(greetingService);
 		EndpointConnectionManager manager = new EndpointConnectionManager(endpoint, WS_URI);
 		manager.setAutoStartup(true);
 		return manager;

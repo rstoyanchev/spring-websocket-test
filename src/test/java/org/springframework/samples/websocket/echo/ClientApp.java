@@ -1,5 +1,5 @@
 /*
- * Copyright 2002-2013 the original author or authors.
+ * Copyright 2002-2021 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,13 +15,11 @@
  */
 package org.springframework.samples.websocket.echo;
 
-import java.io.IOException;
-
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 public class ClientApp {
 
-	public static void main(String[] args) throws IOException {
+	public static void main(String[] args) {
 
 		try {
 			AnnotationConfigApplicationContext cxt = new AnnotationConfigApplicationContext(ClientConfig.class);

@@ -1,5 +1,5 @@
 /*
- * Copyright 2002-2013 the original author or authors.
+ * Copyright 2002-2021 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,7 +17,6 @@
 package org.springframework.samples.websocket.config;
 
 import javax.servlet.ServletContext;
-import javax.servlet.ServletException;
 
 import org.springframework.web.WebApplicationInitializer;
 import org.springframework.web.context.ContextLoaderListener;
@@ -27,7 +26,7 @@ import org.springframework.web.context.support.AnnotationConfigWebApplicationCon
 public class DispatcherServletInitializer implements WebApplicationInitializer {
 
 	@Override
-	public void onStartup(ServletContext servletContext) throws ServletException {
+	public void onStartup(ServletContext servletContext) {
 		AnnotationConfigWebApplicationContext wac = new AnnotationConfigWebApplicationContext();
 		wac.register(EndpointConfig.class);
 		servletContext.addListener(new ContextLoaderListener(wac));
