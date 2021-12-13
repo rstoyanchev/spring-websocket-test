@@ -13,10 +13,28 @@
 				<artifactId>spring-framework-bom</artifactId>
 				<type>pom</type>
 				<scope>import</scope>
-				<version>5.3.2</version>
+				<version>5.3.13 </version>
+			</dependency>
+			<dependency>
+				<groupId>org.eclipse.jetty</groupId>
+				<artifactId>jetty-bom</artifactId>
+				<type>pom</type>
+				<scope>import</scope>
+				<version>10.0.7</version>
+			</dependency>
+			<dependency>
+				<groupId>org.apache.logging.log4j</groupId>
+				<artifactId>log4j-bom</artifactId>
+				<type>pom</type>
+				<scope>import</scope>
+				<version>2.15.0</version>
 			</dependency>
 		</dependencies>
 	</dependencyManagement>
+
+	<properties>
+		<tomcat.version>9.0.56</tomcat.version>
+	</properties>
 
 	<dependencies>
 		<dependency>
@@ -47,40 +65,36 @@
 		<dependency>
 			<groupId>org.apache.logging.log4j</groupId>
 			<artifactId>log4j-api</artifactId>
-			<version>2.14.0</version>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.logging.log4j</groupId>
 			<artifactId>log4j-core</artifactId>
-			<version>2.14.0</version>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.logging.log4j</groupId>
 			<artifactId>log4j-slf4j-impl</artifactId>
-			<version>2.14.0</version>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.logging.log4j</groupId>
 			<artifactId>log4j-jul</artifactId>
-			<version>2.14.0</version>
 		</dependency>
 
 		<dependency>
 			<groupId>org.apache.tomcat</groupId>
 			<artifactId>tomcat-websocket</artifactId>
-			<version>9.0.41</version>
+			<version>${tomcat.version}</version>
 			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.tomcat.embed</groupId>
 			<artifactId>tomcat-embed-core</artifactId>
-			<version>9.0.41</version>
+			<version>${tomcat.version}</version>
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.tomcat.embed</groupId>
 			<artifactId>tomcat-embed-websocket</artifactId>
-			<version>9.0.41</version>
+			<version>${tomcat.version}</version>
 			<scope>provided</scope>
 		</dependency>
 
