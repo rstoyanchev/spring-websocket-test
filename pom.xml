@@ -33,7 +33,7 @@
 	</dependencyManagement>
 
 	<properties>
-		<tomcat.version>9.0.56</tomcat.version>
+		<tomcat.version>9.0.83</tomcat.version>
 	</properties>
 
 	<dependencies>
